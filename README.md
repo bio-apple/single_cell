@@ -46,13 +46,15 @@ Chromium 是一种流行的高通量方法，使用唯一分子标识符（UMI�
 
 ![balance](./balanced_design.png)
 
+[Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
+
 ## 4.资源链接
 
-**A useful tool to estimate how many cells to sequence has been developed by the Satija Lab** https://satijalab.org/howmanycells/
+**A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
 
-**It is difficult to precisely estimate how much an experiment will cost, although we point to this tool from the Satija Lab as a starting point**https://satijalab.org/costpercell/
+**It is difficult to precisely estimate how much an experiment will cost, although we point to this tool from the Satija Lab as a starting point**:https://satijalab.org/costpercell/
     
-**Single-cell best practices**https://www.sc-best-practices.org/preamble.html
+**Single-cell best practices**:https://www.sc-best-practices.org/preamble.html
 
-**Analysis of single cell RNA-seq data**https://www.singlecellcourse.org/index.html
+**Analysis of single cell RNA-seq data**:https://www.singlecellcourse.org/index.html
 
