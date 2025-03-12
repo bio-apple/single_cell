@@ -45,7 +45,7 @@ Chromium 是一种流行的高通量方法，使用唯一分子标识符（UMI�
 
 ![Overview of the analysis modules for single-cell RNA sequencing data analysis](./figure/Overview_of_the_analysis_modules_for_single-cell_RNA_sequencing_data_analysis.jpg)
 
-### 5-1：mapping
+### 3-1：mapping
 
 Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, and Alevin-fry,Summary of the results for each evaluated section of interest and mapper. Good results are coloured in green, intermediate in yellow, and poor results in red.
 
@@ -53,7 +53,7 @@ Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, 
 
 [Brüning R S, Tombor L, Schulz M H, et al. Comparative analysis of common alignment tools for single-cell RNA sequencing[J]. Gigascience, 2022, 11: giac001.](https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giac001/6515741?login=true)
 
-### 5-2:considerations_in_Quality control
+### 3-2:considerations_in_Quality control
 
 常见的细胞质量控制 (QC) 步骤主要基于以下三个指标：
 
