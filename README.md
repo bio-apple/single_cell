@@ -89,6 +89,12 @@ UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多�
 
 [Osorio D, Cai J J. Systematic determination of the mitochondrial proportion in human and mice tissues for single-cell RNA-sequencing data quality control[J]. Bioinformatics, 2021, 37(7): 963-967.](https://academic.oup.com/bioinformatics/article/37/7/963/5896986?login=false)
 
+### 3-3:Normalization
+
+![normalization](./Normalization/Conceptual_differences_between_variance-stabilizing_transformations.png)
+
+[Ahlmann-Eltze C, Huber W. Comparison of transformations for single-cell RNA-seq data[J]. Nature Methods, 2023, 20(5): 665-672.](https://www.nature.com/articles/s41592-023-01814-1)
+
 ### highly_variable_gene
 
 *HVG selection methods can be classified into four categories:*
