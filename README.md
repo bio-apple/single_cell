@@ -103,13 +103,9 @@ UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多�
 
 ### batch_effect
 
-![batch effect](./batch_effect_protocols.png)
-
-![balance](./balanced_design.png)
+![batch effect](./experiments_batch_effect/10-Figure1-1.png)
 
 [Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
-
-
 
 ## 4.资源链接
 
