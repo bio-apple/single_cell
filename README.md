@@ -26,9 +26,7 @@
 
 ## 2.工作流程
 
-包括分离单细胞（或细胞核）、将RNA转化为cDNA、制备测序文库（Illumina）并进行测序。
-
-主要在通量（每次实验捕获多少细胞）、定量类型（全长或基于标签）以及成本方面有所不同。
+包括分离单细胞（或细胞核）、将RNA转化为cDNA、制备测序文库（Illumina）并进行测序。 主要在通量（每次实验捕获多少细胞）、定量类型（全长或基于标签）以及成本方面有所不同。
 
 SMART-seq2 是一种流行的低通量方法，提供全长转录本定量。它非常适合详细研究较小群体的细胞（例如，差异性异构体使用、低表达转录本的表征）。
 
@@ -36,30 +34,8 @@ Chromium 是一种流行的高通量方法，使用唯一分子标识符（UMI�
 
 ![library](./10X_Partition_2-1024x406.png)
 
-## 3.批次效应
 
-使用不同技术对同一材料进行测序，也可能观察到这些效应（如下图所示），如果没有适当标准化，可能会导致错误的结论。
-
-![batch effect](./batch_effect_protocols.png)
-
-避免批次效应实验设计很重要
-
-![balance](./balanced_design.png)
-
-[Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
-
-## 4.资源链接
-
-**A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
-
-**It is difficult to precisely estimate how much an experiment will cost, although we point to this tool from the Satija Lab as a starting point**:https://satijalab.org/costpercell/
-    
-**Single-cell best practices**:https://www.sc-best-practices.org/preamble.html
-
-**Analysis of single cell RNA-seq data**:https://www.singlecellcourse.org/index.html
-
-
-## 5.生信分析
+## 3.bioinformatics
 
 **Roadmap for typical single-cell RNA sequencing data analysis**
 
@@ -124,3 +100,23 @@ UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多�
 ![Classification_of_baseline_HVG_selection_methods](./highly_variable_gene/Classification_of_baseline_HVG_selection_methods.png)
 
 [Zhao R, Lu J, Zhou W, et al. A systematic evaluation of highly variable gene selection methods for single-cell RNA-sequencing[J]. bioRxiv, 2024: 2024.08. 25.608519.](https://www.biorxiv.org/content/10.1101/2024.08.25.608519v1.abstract)
+
+### batch_effect
+
+![batch effect](./batch_effect_protocols.png)
+
+![balance](./balanced_design.png)
+
+[Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
+
+
+
+## 4.资源链接
+
+**A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
+
+**It is difficult to precisely estimate how much an experiment will cost, although we point to this tool from the Satija Lab as a starting point**:https://satijalab.org/costpercell/
+    
+**Single-cell best practices**:https://www.sc-best-practices.org/preamble.html
+
+**Analysis of single cell RNA-seq data**:https://www.singlecellcourse.org/index.html
