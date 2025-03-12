@@ -58,3 +58,97 @@ Chromium 是一种流行的高通量方法，使用唯一分子标识符（UMI�
 
 **Analysis of single cell RNA-seq data**:https://www.singlecellcourse.org/index.html
 
+
+## 5.生信分析
+
+### 5-1：Pre-processing and visualization
+
+Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, and Alevin-fry,Summary of the results for each evaluated section of interest and mapper. Good results are coloured in green, intermediate in yellow, and poor results in red.
+
+![mapping tools](./mapping.jpg)
+
+[Brüning R S, Tombor L, Schulz M H, et al. Comparative analysis of common alignment tools for single-cell RNA sequencing[J]. Gigascience, 2022, 11: giac001.](https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giac001/6515741?login=true)
+
+Comparative Analysis of common alignment tools for single-cell RNA sequencing:https://github.com/rahmsen/BenchmarkAlignment
+
+### 5-2:Quality control
+
+常见的细胞质量控制 (QC) 步骤主要基于以下三个指标：
+
+        每个条形码的 UMI 计数深度 (count depth)
+        每个条形码检测到的基因数 (gene count per barcode)
+        每个条形码中线粒体基因 UMI 计数的比例 (fraction of mitochondrial counts per barcode)
+
+这些异常条形码可能对应于：
+
+        凋亡细胞 (dying cells)
+        细胞膜破损的细胞 (cells with broken membranes)
+        多胞 (doublets, 即两个或多个细胞的 mRNA 被误认为是单个细胞的表达数据)：
+
+如果某个条形码的 UMI 计数低、检测到的基因数少、但线粒体基因占比高，则可能是细胞膜破损导致胞质mRNA泄漏，仅剩线粒体mRNA被保留下来。 
+
+相反，UMI计数异常高、检测到的基因数异常多，可能代表多胞，通常需要设定高UMI计数阈值来过滤掉潜在的多胞。
+
+目前，有三种先进的多胞检测工具可以提供更优雅且更准确的解决方案：
+
+        DoubletDecon
+        Scrublet (Wolock et al., 2019)
+        Doublet Finder (McGinnis et al., 2018)
+
+异源双胞 (heterotypic doublet)：相同类型的细胞 (但来自不同个体) 组成，则称为同源双胞 (homotypic doublet)
+
+异源双胞 (heterotypic doublets) 由不同类型或不同状态的细胞组成，其识别至关重要，因为它们很可能被错误分类，并会对后续数据分析造成干扰。
+
+双胞的检测方法主要有两种：
+
+基于计数特征的检测：双胞通常具有较高的测序深度 (reads) 和检测到的基因数 (features)，可利用这些特征进行筛选。
+
+基于人工双胞的检测：通过模拟生成人工双胞 (artificial doublets) 并与数据集中实际细胞进行比较来识别可能的双胞。
+
+方法 1：基于个体 SNP 信息的双胞/多胞检测
+
+适用于混合样本 (如来自不同个体的细胞)，可以通过 VCF 文件 提供的个体特异性 SNP 来检测双胞或多胞。
+        
+        Freemuxlet (来自 Popscle)
+        Demuxlet
+
+方法 2：基于细胞内 SNP 异质性的双胞/多胞检测
+
+适用于 非混合样本 (同一个个体的单细胞数据)，可以通过细胞内 SNP 的等位基因频率来检测双胞。
+
+        DoubletDecon
+        Souporcell
+        Vireo
+
+同源双胞 (Homotypic Doublet) vs. 异源双胞 (Heterotypic Doublet) 的区别
+
+|类型|	定义|	影响| 	检测难度                         |	检测方法|
+|--|--|--|-------------------------------|--|
+|同源双胞 (Homotypic Doublet)	|相同细胞类型的两个细胞被分配到同一个条形码 (barcode)|	由于它们的基因表达模式相似，通常不会显著影响聚类，但可能导致表达水平异常升高| 	难以检测，因其表达特征与单个细胞相似	          |1. SNP 分析 (Freemuxlet, Demuxlet) 2. 细胞哈希 (Cell Hashing)|
+|异源双胞 (Heterotypic Doublet)	|不同细胞类型或不同细胞状态的两个细胞被分配到同一个条形码|	可能会导致错误分类，影响细胞亚群鉴定| 	相对容易检测，因为其基因表达模式不同于任何单个细胞类型	 | 1. 计算基因表达异常升高 (DoubletFinder, Scrublet) 2. 人工双胞模拟 (DoubletDecon) |
+
+
+线粒体基因比例较高的细胞，可能参与呼吸代谢 (respiratory processes)，并不一定是死细胞。
+
+UMI计数较低、基因数较少的细胞，可能属于静息 (quiescent) 细胞群，并非一定是低质量细胞。
+
+UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多胞。
+
+因此，在设定QC阈值时，应该联合多个QC指标进行筛选，并尽量使用宽松的阈值，以免误删真正的细胞群体。未来，可以使用多变量QC依赖性模型来提高QC筛选的灵敏度。
+
+在单细胞 RNA 测序 (scRNA-seq) 中，空胞指的是：
+
+含有条形码 (barcode) 但没有真正的细胞，仅含有少量环境 RNA (ambient RNA)。
+
+这些 RNA 可能来源于细胞裂解后的游离 RNA，在实验过程中随机进入微滴 (droplet) 或孔板 (well) 中。
+
+|QC 指标| 	空胞的典型特征           |
+|--|--------------------|
+|UMI 计数 (Unique Molecular Identifier, UMI counts)| 	极低 (低于正常细胞)       |
+|基因数目 (Number of detected genes)	| 极少 (通常 < 200)      |
+|线粒体基因比例 (Mitochondrial gene fraction)	| 可能较高，但不总是明显        |
+|细胞条形码 (Cell barcode rank plot)	| 低 UMI 计数的条形码通常是空胞  |
+
+
+
+[Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
