@@ -34,16 +34,21 @@ Chromium 是一种流行的高通量方法，使用唯一分子标识符（UMI�
 
 ![library](./10X_Partition_2-1024x406.png)
 
-
 ## 3.bioinformatics
 
-**Roadmap for typical single-cell RNA sequencing data analysis**
+*Roadmap for typical single-cell RNA sequencing data analysis*
 
 ![Roadmap for typical single-cell RNA sequencing data analysis](./figure/Roadmap_for_typical_single-cell_RNA_sequencing_data_analysis.jpg)
 
-**Overview of the analysis modules for single-cell RNA sequencing data analysis**
+*Overview of the analysis modules for single-cell RNA sequencing data analysis*
 
 ![Overview of the analysis modules for single-cell RNA sequencing data analysis](./figure/Overview_of_the_analysis_modules_for_single-cell_RNA_sequencing_data_analysis.jpg)
+
+[Jovic D, Liang X, Zeng H, et al. Single‐cell RNA sequencing technologies and applications: A brief overview[J]. Clinical and translational medicine, 2022, 12(3): e694.](https://onlinelibrary.wiley.com/doi/full/10.1002/ctm2.694)
+
+### 3-0:[Raw data processing](https://www.sc-best-practices.org/introduction/raw_data_processing.html)
+
+![counts](./figure/overview_raw_data_processing.jpg)
 
 ### 3-1：mapping
 
@@ -54,6 +59,8 @@ Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, 
 [Brüning R S, Tombor L, Schulz M H, et al. Comparative analysis of common alignment tools for single-cell RNA sequencing[J]. Gigascience, 2022, 11: giac001.](https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giac001/6515741?login=true)
 
 ### 3-2:considerations_in_Quality control
+
+![counts](./considerations_in_quality_control/counts.png)
 
 常见的细胞质量控制 (QC) 步骤主要基于以下三个指标：
 
@@ -69,6 +76,8 @@ Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, 
 
 ![considerations_in_quality_control](considerations_in_quality_control/1-s2.0-S1016847824001286-gr1_lrg.jpg)
 
+[Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
+
 如果某个条形码的 UMI 计数低、检测到的基因数少、但线粒体基因占比高，则可能是细胞膜破损导致胞质mRNA泄漏，仅剩线粒体mRNA被保留下来。 
 
 相反，UMI计数异常高、检测到的基因数异常多，可能代表多胞，通常需要设定高UMI计数阈值来过滤掉潜在的多胞。
@@ -83,19 +92,24 @@ UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多�
 
 在单细胞 RNA 测序 (scRNA-seq) 中，空胞指的是： 含有条形码 (barcode) 但没有真正的细胞，仅含有少量环境 RNA (ambient RNA)。 这些 RNA 可能来源于细胞裂解后的游离 RNA，在实验过程中随机进入微滴 (droplet) 或孔板 (well) 中。
 
-[Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
-
+### 3-3:Mitochondrial gene content cutoff
 *A recent systematic survey of scRNA-seq data suggested that a mitochondrial proportion threshold of 10% is appropriate to distinguish between healthy and low-quality cells in most human tissues, while in mouse tissues, the recommended threshold is 5%.*
 
-[Osorio D, Cai J J. Systematic determination of the mitochondrial proportion in human and mice tissues for single-cell RNA-sequencing data quality control[J]. Bioinformatics, 2021, 37(7): 963-967.](https://academic.oup.com/bioinformatics/article/37/7/963/5896986?login=false)
+[Osorio D, Cai JJ. Systematic determination of the mitochondrial proportion in human and mice tissues for single-cell RNA-sequencing data quality control[J]. Bioinformatics, 2021, 37(7): 963-967.](https://academic.oup.com/bioinformatics/article/37/7/963/5896986?login=false)
 
-### 3-3:Normalization
+### 3-4:remove background noise(remove_ambient_RNA_contamination)
+
+We use our genotype-based estimates to evaluate the performance of three methods (**CellBender, DecontX, SoupX**) that are designed to quantify and remove background noise. We find that CellBender provides the most precise estimates of background noise levels and also yields the highest improvement for marker gene detection.
+
+[Janssen P, Kliesmete Z, Vieth B, et al. The effect of background noise and its removal on the analysis of single-cell expression data[J]. Genome biology, 2023, 24(1): 140.](https://link.springer.com/article/10.1186/s13059-023-02978-x)
+
+### 3-5:Normalization
 
 ![normalization](./Normalization/Conceptual_differences_between_variance-stabilizing_transformations.png)
 
 [Ahlmann-Eltze C, Huber W. Comparison of transformations for single-cell RNA-seq data[J]. Nature Methods, 2023, 20(5): 665-672.](https://www.nature.com/articles/s41592-023-01814-1)
 
-### highly_variable_gene
+### 3-6:highly_variable_gene
 
 *HVG selection methods can be classified into four categories:*
 
@@ -107,11 +121,14 @@ UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多�
 
 [Zhao R, Lu J, Zhou W, et al. A systematic evaluation of highly variable gene selection methods for single-cell RNA-sequencing[J]. bioRxiv, 2024: 2024.08. 25.608519.](https://www.biorxiv.org/content/10.1101/2024.08.25.608519v1.abstract)
 
-### batch_effect
+### 3-7:batch_effect
 
 ![batch effect](./experiments_batch_effect/10-Figure1-1.png)
 
 [Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
+
+### 3-8:PCA_tSNE_UMAP
+
 
 ## 4.资源链接
 
