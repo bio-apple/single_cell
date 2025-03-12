@@ -61,17 +61,43 @@ Chromium 是一种流行的高通量方法，使用唯一分子标识符（UMI�
 
 ## 5.生信分析
 
-### 5-1：Pre-processing and visualization
+**Roadmap for typical single-cell RNA sequencing data analysis**
+
+![Roadmap for typical single-cell RNA sequencing data analysis](./figure/Roadmap_for_typical_single-cell_RNA_sequencing_data_analysis.jpg)
+
+**Overview of the analysis modules for single-cell RNA sequencing data analysis**
+
+![Overview of the analysis modules for single-cell RNA sequencing data analysis](./figure/Overview_of_the_analysis_modules_for_single-cell_RNA_sequencing_data_analysis.jpg)
+
+### 5-1：mapping
 
 Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, and Alevin-fry,Summary of the results for each evaluated section of interest and mapper. Good results are coloured in green, intermediate in yellow, and poor results in red.
 
-![mapping tools](./mapping.jpg)
+![mapping tools](mapping/mapping.jpg)
 
 [Brüning R S, Tombor L, Schulz M H, et al. Comparative analysis of common alignment tools for single-cell RNA sequencing[J]. Gigascience, 2022, 11: giac001.](https://academic.oup.com/gigascience/article/doi/10.1093/gigascience/giac001/6515741?login=true)
 
-Comparative Analysis of common alignment tools for single-cell RNA sequencing:https://github.com/rahmsen/BenchmarkAlignment
+### 5-2:considerations_in_Quality control
 
-### 5-2:Quality control
+![considerations_in_quality_control](considerations_in_quality_control/1-s2.0-S1016847824001286-gr1_lrg.jpg)
+
+[Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
+
+*A recent systematic survey of scRNA-seq data suggested that a mitochondrial proportion threshold of 10% is appropriate to distinguish between healthy and low-quality cells in most human tissues, while in mouse tissues, the recommended threshold is 5%.*
+
+[	Osorio D, Cai J J. Systematic determination of the mitochondrial proportion in human and mice tissues for single-cell RNA-sequencing data quality control[J]. Bioinformatics, 2021, 37(7): 963-967.](https://academic.oup.com/bioinformatics/article/37/7/963/5896986?login=false)
+
+### highly_variable_gene
+
+*HVG selection methods can be classified into four categories:*
+
+![HVG_selection_methods](./highly_variable_gene/HVG_selection_methods.png)
+
+*Classification of baseline HVG selection methods.*
+
+![Classification_of_baseline_HVG_selection_methods](./highly_variable_gene/Classification_of_baseline_HVG_selection_methods.png)
+
+[Zhao R, Lu J, Zhou W, et al. A systematic evaluation of highly variable gene selection methods for single-cell RNA-sequencing[J]. bioRxiv, 2024: 2024.08. 25.608519.](https://www.biorxiv.org/content/10.1101/2024.08.25.608519v1.abstract)
 
 常见的细胞质量控制 (QC) 步骤主要基于以下三个指标：
 
@@ -148,7 +174,3 @@ UMI 计数较高的细胞，可能只是细胞体积较大，并不一定是多�
 |基因数目 (Number of detected genes)	| 极少 (通常 < 200)      |
 |线粒体基因比例 (Mitochondrial gene fraction)	| 可能较高，但不总是明显        |
 |细胞条形码 (Cell barcode rank plot)	| 低 UMI 计数的条形码通常是空胞  |
-
-
-
-[Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
