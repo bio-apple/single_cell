@@ -74,7 +74,7 @@ Raw data processing pipelines such as Cell Ranger、STARsolo, Kallisto, Alevin, 
         细胞膜破损的细胞 (cells with broken membranes)
         多胞 (doublets, 即两个或多个细胞的 mRNA 被误认为是单个细胞的表达数据)
 
-![considerations_in_quality_control](considerations_in_quality_control/1-s2.0-S1016847824001286-gr1_lrg.jpg)
+![considerations_in_quality_control](considerations_in_quality_control/Overview_of_unimodal_analysis_steps_for_scRNA-seq.png)
 
 [Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
 
@@ -111,6 +111,8 @@ We use our genotype-based estimates to evaluate the performance of three methods
 
 ### 3-6:highly_variable_gene
 
+        pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
+
 *HVG selection methods can be classified into four categories:*
 
 ![HVG_selection_methods](./highly_variable_gene/HVG_selection_methods.png)
@@ -127,9 +129,43 @@ We use our genotype-based estimates to evaluate the performance of three methods
 
 [Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
 
-### 3-8:PCA_tSNE_UMAP
+### 3-8:Dimensionality Reduction:PCA+Cluster the cells:UMAP+tSNE
+
+在scRNA-seq数据分析中，我们通过寻找与已知细胞状态或细胞周期阶段相关的细胞身份来描述数据集中的细胞结构。这一过程通常被称为细胞身份注释。
+为此，我们将细胞组织成簇，以推断相似细胞的身份。聚类本身是一个常见的无监督机器学习问题。我们可以通过在降维后的表达空间中最小化簇内距离来得出簇。在这种情况下，表达空间决定了细胞在降维表示下的基因表达相似性。例如，这种低维表示可以通过主成分分析（PCA）确定.
+PCA：用于前期降维、去噪或输入下游分析（如聚类），不建议直接用于最终可视化。在我们运行PCA之后，需要决定将哪些主成分（PCs）纳入下游分析。我们希望纳入足够多的PCs以保留生物学信号，但又要尽量减少PCs的数量，以避免数据中的噪声干扰。根据每个主成分解释的方差百分比对主成分进行排名
+In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that the majority of true signal is captured in the first 10 PCs.
+
+        pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+        ElbowPlot(pbmc)
+
+![PCA](./PCA_tSNE_UMAP/PCA.png)
+
+KNN图由反映数据集中细胞的节点组成。我们首先在PCA降维后的表达空间中为所有细胞计算欧几里得距离矩阵，然后将每个细胞与其K个最相似的细胞连接起来。通常，K的值根据数据集的大小设置为5到100之间。KNN图通过在图中将表达空间中的密集区域表示为密集连接区域，反映了表达数据的底层拓扑结构
+![KNN](./PCA_tSNE_UMAP/KNN.jpeg)
+
+        pbmc <- FindNeighbors(pbmc, dims = 1:10)
+        pbmc <- FindClusters(pbmc, resolution = 0.5)
+
+UMAP（均匀流形逼近和投影）和t-SNE（t-随机邻域嵌入）是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
+Suggest a resolution of 0.4-1.2 for data sets of ~3,000 cells.
+
+        pbmc <- RunUMAP(pbmc, dims = 1:10)
+
+![UMAP](./PCA_tSNE_UMAP/UMAP.png)
+
+tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
+
+– UMAP is quite a bit quicker than tSNE
+
+– UMAP can preserve more global structure than tSNE*
+
+– UMAP can run on raw data without PCA preprocessing*
+
+– UMAP can allow new data to be added to an existing projection
 
 
+ 
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
