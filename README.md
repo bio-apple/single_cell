@@ -238,6 +238,8 @@ several thousands or more(e.g., size > 100)
 Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化单细胞注释工具。它使用 Seurat label transfer（标签转移） 方法，将新的单细胞数据集投影到一个 预训练的参考数据库 上，以实现快速、自动的细胞类型注释。
 相关软件:**Azimuth (Seurat超大规模数据（10K~百万细胞）)**
 
+
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
