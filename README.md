@@ -202,7 +202,7 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 [Rich J M, Moses L, Einarsson P H, et al. The impact of package selection and versioning on single-cell RNA-seq analysis[J]. bioRxiv, 2024.](https://www.biorxiv.org/content/10.1101/2024.04.04.588111v2)
 
-### 3-9:cell Annotation
+### 3-11:cell Annotation
 
 手动注释与自动化注释的详细比较
 
