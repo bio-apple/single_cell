@@ -219,13 +219,13 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 **基于自动化注释**
 
-**marker genes for manual annotation**
+**1-marker genes for manual annotation**
 
 Smaller gene sets (e.g.,size < 20) are more likely to yield cells with unstable scores
 
 相关软件：**Garnett适合小规模数据（≤50K 细胞），CPU 处理足够快，可自定义 marker**、CellAssign
 
-**a larger set of genes**
+**2-a larger set of genes**
 
 several thousands or more(e.g., size > 100) 
 
@@ -233,7 +233,7 @@ several thousands or more(e.g., size > 100)
 
 [Cheng C, Chen W, Jin H, et al. A review of single-cell rna-seq annotation, integration, and cell–cell communication[J]. Cells, 2023, 12(15): 1970.](https://www.mdpi.com/2073-4409/12/15/1970)
 
-**annotation by mapping to a reference**
+**3-annotation by mapping to a reference**
 
 Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化单细胞注释工具。它使用 Seurat label transfer（标签转移） 方法，将新的单细胞数据集投影到一个 预训练的参考数据库 上，以实现快速、自动的细胞类型注释。
 相关软件:**Azimuth (Seurat超大规模数据（10K~百万细胞）)**
