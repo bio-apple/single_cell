@@ -194,9 +194,9 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 – UMAP is quite a bit quicker than tSNE
 
-– UMAP can preserve more global structure than tSNE*
+– UMAP can preserve more global structure than tSNE
 
-– UMAP can run on raw data without PCA preprocessing*
+– UMAP can run on raw data without PCA preprocessing
 
 – UMAP can allow new data to be added to an existing projection
 
