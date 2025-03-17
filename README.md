@@ -129,7 +129,7 @@ We use our genotype-based estimates to evaluate the performance of three methods
 
 [Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
 
-### 3-8:Dimensionality Reduction:PCA+Cluster the cells:UMAP+tSNE
+### 3-8:Dimensionality Reduction:PCA
 
 在scRNA-seq数据分析中，我们通过寻找与已知细胞状态或细胞周期阶段相关的细胞身份来描述数据集中的细胞结构。这一过程通常被称为细胞身份注释。
 为此，我们将细胞组织成簇，以推断相似细胞的身份。聚类本身是一个常见的无监督机器学习问题。我们可以通过在降维后的表达空间中最小化簇内距离来得出簇。在这种情况下，表达空间决定了细胞在降维表示下的基因表达相似性。例如，这种低维表示可以通过主成分分析（PCA）确定.
@@ -141,14 +141,19 @@ In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that t
 
 ![PCA](./PCA_tSNE_UMAP/PCA.png)
 
+### 3-9:Cluster：KNN and Visualize clusters of cells
+
 KNN图由反映数据集中细胞的节点组成。我们首先在PCA降维后的表达空间中为所有细胞计算欧几里得距离矩阵，然后将每个细胞与其K个最相似的细胞连接起来。通常，K的值根据数据集的大小设置为5到100之间。KNN图通过在图中将表达空间中的密集区域表示为密集连接区域，反映了表达数据的底层拓扑结构
 ![KNN](./PCA_tSNE_UMAP/KNN.jpeg)
+
+算法选择：
+Seurat:1 = original Louvain algorithm(default); 2 = Louvain algorithm with multilevel refinement; 3 = SLM algorithm; 4 = Leiden algorithm，**Leiden algorithm** is an improved version of the **Louvain algorithm**
+Suggest a resolution of **0.4-1.2** for data sets of ~3,000 cells.K值默认scanpy是15，Seurat是20.
 
         pbmc <- FindNeighbors(pbmc, dims = 1:10)
         pbmc <- FindClusters(pbmc, resolution = 0.5)
 
-UMAP（均匀流形逼近和投影）和t-SNE（t-随机邻域嵌入）是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
-Suggest a resolution of 0.4-1.2 for data sets of ~3,000 cells.
+t-distributed stochastic neighbor embedding (t-SNE)和Uniform Manifold Approximation and Projection (UMAP) 是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
 
         pbmc <- RunUMAP(pbmc, dims = 1:10)
 
@@ -164,8 +169,44 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 – UMAP can allow new data to be added to an existing projection
 
+[Rich J M, Moses L, Einarsson P H, et al. The impact of package selection and versioning on single-cell RNA-seq analysis[J]. bioRxiv, 2024.](https://www.biorxiv.org/content/10.1101/2024.04.04.588111v2)
 
- 
+### 3-9:cell Annotation
+
+手动注释与自动化注释的详细比较
+
+|方面	|手动注释	| 自动化注释                      |
+|--|--|----------------------------|
+|定义	|人工基于标记基因和知识推断| 	算法基于参考数据自动分配身份            |
+|依赖性	|依赖研究者经验和文献	| 依赖参考数据集或数据库                |
+|速度|	慢，逐簇分析	| 快，一次性处理所有细胞                |
+准确性|	高（若经验丰富）	| 中到高（取决于参考质量）               |
+|灵活性|	高，可处理未知类型	| 中，受参考限制                    |
+|可重复性|	低，因人而异	| 高，算法一致                     |
+|适用规模|	小型数据集	| 大型数据集                      |
+|工具示例|	Seurat、Scanpy	| SingleR、ScType、CellTypist  |
+
+**基于自动化注释**
+
+*marker genes for manual annotation*
+
+Smaller gene sets (e.g.,size < 20) are more likely to yield cells with unstable scores
+
+相关软件：**Garnett适合小规模数据（≤50K 细胞），CPU 处理足够快，可自定义 marker**、CellAssign
+
+*a larger set of genes*
+
+several thousands or more(e.g., size > 100) 
+
+相关软件：**CellTypist（CPU 运行：适用于 中等规模数据（10K~100K 细胞），GPU 运行（使用 PyTorch 或 TensorFlow）：适用于 百万级别数据（>1M 细胞）**（内置大规模的细胞类型参考数据库：人类和小鼠，支持Scanpy和Seurat整合）、Clustifyr、**SingleR（中~大型数据（≥10K 细胞））**
+
+[Cheng C, Chen W, Jin H, et al. A review of single-cell rna-seq annotation, integration, and cell–cell communication[J]. Cells, 2023, 12(15): 1970.](https://www.mdpi.com/2073-4409/12/15/1970)
+
+annotation by mapping to a reference
+
+Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化单细胞注释工具。它使用 Seurat label transfer（标签转移） 方法，将新的单细胞数据集投影到一个 预训练的参考数据库 上，以实现快速、自动的细胞类型注释。
+相关软件:**Azimuth (Seurat超大规模数据（10K~百万细胞）)**
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
@@ -175,3 +216,5 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 **Single-cell best practices**:https://www.sc-best-practices.org/preamble.html
 
 **Analysis of single cell RNA-seq data**:https://www.singlecellcourse.org/index.html
+
+**SIB course Single Cell Transcriptomics**:https://sib-swiss.github.io/single-cell-training/
