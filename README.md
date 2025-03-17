@@ -242,3 +242,5 @@ Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化
 **Analysis of single cell RNA-seq data**:https://www.singlecellcourse.org/index.html
 
 **SIB course Single Cell Transcriptomics**:https://sib-swiss.github.io/single-cell-training/
+
+**Seurat - Guided Clustering Tutorial**：https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
