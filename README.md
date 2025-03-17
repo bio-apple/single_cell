@@ -170,8 +170,15 @@ NN-Descent（Nearest Neighbor Descent）是一种高效的KNN搜索算法，通�
 
         pbmc <- FindNeighbors(pbmc, dims = 1:10)
 
-SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两个细胞是否“共享”相同的邻居。通过这种方式，增强了相似性定义的鲁棒性。 Seurat and Scanpy使用SNN进行接下来的cluster分析，Suggest a resolution of **0.4-1.2** for data sets of ~3,000 cells.
-算法选择：original Louvain algorithm(default); 2 = Louvain algorithm with multilevel refinement; 3 = SLM algorithm; 4 = Leiden algorithm，**Leiden algorithm** is an improved version of the **Louvain algorithm**
+SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两个细胞是否“共享”相同的邻居。通过这种方式，增强了相似性定义的鲁棒性。 Seurat and Scanpy使用SNN进行接下来的cluster分析，Suggest a resolution of **0.4-1.2** for data sets of ~3,000 cells. 算法选择：
+
+1:original Louvain algorithm(default)
+
+2:Louvain algorithm with multilevel refinement 
+
+3:SLM algorithm
+
+4:**Leiden algorithm** is an improved version of the Louvain algorithm
         
         pbmc <- FindClusters(pbmc, resolution = 0.5)
 
