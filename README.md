@@ -141,7 +141,7 @@ In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that t
 
 ![PCA](./PCA_KNN_cluster_tSNE_UMAP/PCA.png)
 
-### 3-9:KNN/SNN+Cluster：
+### 3-9:KNN/SNN+Cluster
 
 KNN是一种基于距离的方法，用于找到每个细胞的“最近邻居”。在单细胞分析中，通常基于细胞的基因表达谱（通常是降维后的数据，比如PCA或t-SNE/UMAP的坐标）来计算细胞之间的距离（如欧几里得距离）。
 
