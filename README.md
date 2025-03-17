@@ -141,17 +141,41 @@ In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that t
 
 ![PCA](./PCA_tSNE_UMAP/PCA.png)
 
-### 3-9:Cluster：KNN and Visualize clusters of cells
+### 3-9:KNN/SNN+Cluster：
 
-KNN图由反映数据集中细胞的节点组成。我们首先在PCA降维后的表达空间中为所有细胞计算欧几里得距离矩阵，然后将每个细胞与其K个最相似的细胞连接起来。通常，K的值根据数据集的大小设置为5到100之间。KNN图通过在图中将表达空间中的密集区域表示为密集连接区域，反映了表达数据的底层拓扑结构
+KNN是一种基于距离的方法，用于找到每个细胞的“最近邻居”。在单细胞分析中，通常基于细胞的基因表达谱（通常是降维后的数据，比如PCA或t-SNE/UMAP的坐标）来计算细胞之间的距离（如欧几里得距离）。
+
 ![KNN](./PCA_tSNE_UMAP/KNN.jpeg)
 
-算法选择：
-Seurat:1 = original Louvain algorithm(default); 2 = Louvain algorithm with multilevel refinement; 3 = SLM algorithm; 4 = Leiden algorithm，**Leiden algorithm** is an improved version of the **Louvain algorithm**
-Suggest a resolution of **0.4-1.2** for data sets of ~3,000 cells.K值默认scanpy是15，Seurat是20.
+NN-Descent（Nearest Neighbor Descent）是一种高效的KNN搜索算法，通过迭代优化初始的邻居猜测来快速构建近似KNN图。它基于一个假设：“邻居的邻居也很可能是邻居”
+
+![KNN](./KNN/KNN_NN-Descent.png)
+
+*小型数据集:<10,000细胞*
+
+        可以选择精确KNN，因为计算时间通常在分钟级别，易于处理。
+        工具实现：Seurat的默认KNN，或Scanpy中设置use_approx=False。
+
+*中型数据集:10,000-100,000细胞*
+
+        NN-Descent或类似近似算法是更好的选择，兼顾速度和精度。
+        工具实现：Scanpy默认设置，或Seurat中启用近似方法。
+
+*大型数据集:>100,000细胞*
+
+        强烈推荐NN-Descent或更高效的近似算法（如HNSW）。
+        精确KNN几乎不可行，可能需要数小时甚至数天，而NN-Descent可在几分钟内完成。
+
+通常，K的值根据数据集的大小设置为5到100之间。 K值默认scanpy是15，Seurat是20.
 
         pbmc <- FindNeighbors(pbmc, dims = 1:10)
+
+SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两个细胞是否“共享”相同的邻居。通过这种方式，增强了相似性定义的鲁棒性。 Seurat and Scanpy使用SNN进行接下来的cluster分析，Suggest a resolution of **0.4-1.2** for data sets of ~3,000 cells.
+算法选择：original Louvain algorithm(default); 2 = Louvain algorithm with multilevel refinement; 3 = SLM algorithm; 4 = Leiden algorithm，**Leiden algorithm** is an improved version of the **Louvain algorithm**
+        
         pbmc <- FindClusters(pbmc, resolution = 0.5)
+
+### 3-10:Visualize clusters of cells
 
 t-distributed stochastic neighbor embedding (t-SNE)和Uniform Manifold Approximation and Projection (UMAP) 是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
 
