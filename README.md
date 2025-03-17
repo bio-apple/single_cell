@@ -139,17 +139,17 @@ In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that t
         pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
         ElbowPlot(pbmc)
 
-![PCA](./PCA_tSNE_UMAP/PCA.png)
+![PCA](./PCA_KNN_cluster_tSNE_UMAP/PCA.png)
 
 ### 3-9:KNN/SNN+Cluster：
 
 KNN是一种基于距离的方法，用于找到每个细胞的“最近邻居”。在单细胞分析中，通常基于细胞的基因表达谱（通常是降维后的数据，比如PCA或t-SNE/UMAP的坐标）来计算细胞之间的距离（如欧几里得距离）。
 
-![KNN](./PCA_tSNE_UMAP/KNN.jpeg)
+![KNN](./PCA_KNN_cluster_tSNE_UMAP/KNN.jpeg)
 
 NN-Descent（Nearest Neighbor Descent）是一种高效的KNN搜索算法，通过迭代优化初始的邻居猜测来快速构建近似KNN图。它基于一个假设：“邻居的邻居也很可能是邻居”
 
-![KNN](./KNN/KNN_NN-Descent.png)
+![KNN](./PCA_KNN_cluster_tSNE_UMAP/KNN_NN-Descent.png)
 
 *小型数据集:<10,000细胞*
 
@@ -188,7 +188,7 @@ t-distributed stochastic neighbor embedding (t-SNE)和Uniform Manifold Approxima
 
         pbmc <- RunUMAP(pbmc, dims = 1:10)
 
-![UMAP](./PCA_tSNE_UMAP/UMAP.png)
+![UMAP](./PCA_KNN_cluster_tSNE_UMAP/UMAP.png)
 
 tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
@@ -229,7 +229,7 @@ Smaller gene sets (e.g.,size < 20) are more likely to yield cells with unstable 
 
 several thousands or more(e.g., size > 100) 
 
-相关软件：**CellTypist（CPU 运行：适用于 中等规模数据（10K~100K 细胞），GPU 运行（使用 PyTorch 或 TensorFlow）：适用于 百万级别数据（>1M 细胞）**（内置大规模的细胞类型参考数据库：人类和小鼠，支持Scanpy和Seurat整合）、Clustifyr、**SingleR（中~大型数据（≥10K 细胞））**
+相关软件：**CellTypist（CPU 运行：适用于 中等规模数据（10K~100K 细胞），GPU 运行（使用 PyTorch 或 TensorFlow）：适用于百万级别数据（>1M 细胞）**（内置大规模的细胞类型参考数据库：人类和小鼠，支持Scanpy和Seurat整合）、Clustifyr、**SingleR（中~大型数据（≥10K 细胞））**
 
 [Cheng C, Chen W, Jin H, et al. A review of single-cell rna-seq annotation, integration, and cell–cell communication[J]. Cells, 2023, 12(15): 1970.](https://www.mdpi.com/2073-4409/12/15/1970)
 
