@@ -198,13 +198,7 @@ ScaleData通常在NormalizeData（归一化）和FindVariableFeatures（筛选�
 
         seurat_obj <- ScaleData(seurat_obj) # 缩放数据 
 
-### 3-7:batch_effect
-
-![batch effect](./experiments_batch_effect/10-Figure1-1.png)
-
-[Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
-
-### 3-8:Dimensionality Reduction:PCA
+### 3-7:Dimensionality Reduction:PCA
 
 在scRNA-seq数据分析中，我们通过寻找与已知细胞状态或细胞周期阶段相关的细胞身份来描述数据集中的细胞结构。这一过程通常被称为细胞身份注释。
 为此，我们将细胞组织成簇，以推断相似细胞的身份。聚类本身是一个常见的无监督机器学习问题。我们可以通过在降维后的表达空间中最小化簇内距离来得出簇。在这种情况下，表达空间决定了细胞在降维表示下的基因表达相似性。例如，这种低维表示可以通过主成分分析（PCA）确定.
@@ -216,7 +210,7 @@ In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that t
 
 ![PCA](./PCA_KNN_cluster_tSNE_UMAP/PCA.png)
 
-### 3-9:KNN+SNN(cluster)
+### 3-8:KNN+SNN(cluster)
 
 KNN是一种基于距离的方法，用于找到每个细胞的“最近邻居”。在单细胞分析中，通常基于细胞的基因表达谱（通常是降维后的数据，比如PCA或t-SNE/UMAP的坐标）来计算细胞之间的距离（如欧几里得距离）。
 
@@ -257,7 +251,7 @@ SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两�
         
         pbmc <- FindClusters(pbmc, resolution = 0.5)
 
-### 3-10:Visualize clusters of cells
+### 3-9:Visualize clusters of cells
 
 t-distributed stochastic neighbor embedding (t-SNE)和Uniform Manifold Approximation and Projection (UMAP) 是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
 
@@ -277,7 +271,7 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 [Rich J M, Moses L, Einarsson P H, et al. The impact of package selection and versioning on single-cell RNA-seq analysis[J]. bioRxiv, 2024.](https://www.biorxiv.org/content/10.1101/2024.04.04.588111v2)
 
-### 3-11:cell Annotation
+### 3-10:cell Annotation
 
 手动注释与自动化注释的详细比较
 
@@ -292,7 +286,7 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 |适用规模|	小型数据集	| 大型数据集                      |
 |工具示例|	Seurat、Scanpy	| SingleR、ScType、CellTypist  |
 
-**1-Small marker genes(e.g.,size < 20)**
+*Manual annotation:From cluster differentially expressed genes to cluster annotation*
 
 ![marker genes](./cell_annotation/gene_marker.png)
     
@@ -313,18 +307,66 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 ![cell](./cell_annotation/cell_identity.png)
 
+*Automated annotation*
+
+**1-Small marker genes(e.g.,size < 20)**
+
 相关软件：**Garnett适合小规模数据（≤50K 细胞），CPU 处理足够快，可自定义 marker**、CellAssign
 
 **2-a larger set of genes:several thousands or more(e.g., size > 100)**
 
-相关软件：**CellTypist（CPU 运行：适用于 中等规模数据（10K~100K 细胞），GPU 运行（使用 PyTorch 或 TensorFlow）：适用于百万级别数据（>1M 细胞）**（内置大规模的细胞类型参考数据库：人类和小鼠，支持Scanpy和Seurat整合）、Clustifyr、**SingleR（中~大型数据（≥10K 细胞））**
+相关软件：**CellTypist（CPU 运行：适用于 中等规模数据（10K~100K 细胞），GPU 运行（使用 PyTorch 或 TensorFlow）：适用于百万级别数据（>1M 细胞）**（内置大规模的细胞类型参考数据库：人类和小鼠，支持Scanpy和Seurat整合）、Clustifyr
 
 [Cheng C, Chen W, Jin H, et al. A review of single-cell rna-seq annotation, integration, and cell–cell communication[J]. Cells, 2023, 12(15): 1970.](https://www.mdpi.com/2073-4409/12/15/1970)
 
 **3-annotation by mapping to a reference**
 
 Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化单细胞注释工具。它使用 Seurat label transfer（标签转移） 方法，将新的单细胞数据集投影到一个 预训练的参考数据库 上，以实现快速、自动的细胞类型注释。
-相关软件:**Azimuth (Seurat超大规模数据（10K~百万细胞）)**
+相关软件:**Azimuth (Seurat超大规模数据（10K~百万细胞）)**、**SingleR中~大型数据（≥10K 细胞）**
+
+### 3-11:batch_effect
+
+![batch effect](./experiments_batch_effect/10-Figure1-1.png)
+
+[Hicks S C, Townes F W, Teng M, et al. Missing data and technical variability in single-cell RNA-sequencing experiments[J]. Biostatistics, 2018, 19(4): 562-578.](https://academic.oup.com/biostatistics/article/19/4/562/4599254?login=false#123896284)
+
+整合就是合并来自不同样本的单细胞数据，但是往往合并后数据会自然的按照样本分成cluster，因此要消除这种合并影响
+
+![bactch effect](./experiments_batch_effect/BatchCorrection-Intro.png)
+
+首先在Seurat v5版本代码：https://satijalab.org/seurat/articles/seurat5_integration
+
+    merged_obj=merge(x = pbmc1, y = list(pbmc2, pbmc3))
+    merged_obj <- NormalizeData(merged_obj)
+    merged_obj <- FindVariableFeatures(merged_obj)
+    merged_obj <- ScaleData(merged_obj)
+    merged_obj <- RunPCA(merged_obj)
+    merged_obj <- IntegrateLayers(object = merged_obj, method = HarmonyIntegration, orig.reduction = "pca", new.reduction = "harmony", verbose = FALSE)
+    merged_obj[["RNA"]] <- JoinLayers(merged_obj)
+
+整合的方法有很多：
+
+    Anchor-based CCA integration (method=CCAIntegration)
+    Anchor-based RPCA integration (method=RPCAIntegration)
+    Harmony (method=HarmonyIntegration)
+    FastMNN (method= FastMNNIntegration)
+    scVI (method=scVIIntegration)
+
+数据整合的方法分为：
+
+*Global models*：ComBat
+
+*Linear embedding models*：Scanorama、FastMNN、Harmony
+
+*Graph-based methods*：Batch-Balanced k-Nearest Neighbor (BBKNN) method
+
+*Deep learning (DL) approaches*：scVI、scANVI、scGen
+
+几种方法比较下来推荐：**Harmony**
+
+[Tran H T N, Ang K S, Chevrier M, et al. A benchmark of batch-effect correction methods for single-cell RNA sequencing data[J]. Genome biology, 2020, 21: 1-32.](https://link.springer.com/article/10.1186/s13059-019-1850-9)
+
+[Emmanúel Antonsson S, Melsted P. Batch correction methods used in single cell RNA-sequencing analyses are often poorly calibrated[J]. bioRxiv, 2024: 2024.03. 19.585562.](https://www.biorxiv.org/content/10.1101/2024.03.19.585562v1.abstract)
 
 ## 4.资源链接
 
@@ -339,3 +381,11 @@ Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化
 **SIB course Single Cell Transcriptomics**:https://sib-swiss.github.io/single-cell-training/
 
 **Seurat - Guided Clustering Tutorial**：https://satijalab.org/seurat/articles/pbmc3k_tutorial.html
+
+**Scanpy – Single-Cell Analysis in Python**:https://scanpy.readthedocs.io/en/stable/index.html#
+
+**Orchestrating Single-Cell Analysis with Bioconductor**:https://bioconductor.org/books/release/OSCA/
+
+**Single-cell RNA-seq data analysis workshop**:https://hbctraining.github.io/scRNA-seq_online/schedule/links-to-lessons.html
+
+
