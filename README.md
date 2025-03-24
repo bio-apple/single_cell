@@ -376,6 +376,17 @@ Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化
 
 ![DGE](./DGE/differential_gene_expression.jpg)
 
+Pseudobulk（伪批量）：有时scRNA-seq实验只有少量样本或没有生物学重复，导致统计检验的假设难以满足，使用 Pseudobulk 分析，将细胞数据聚合为样本级数据
+
+零膨胀效应（Zero Inflation Effect）：许多基因的表达量在scRNA-seq数据中存在过多的零值
+
+![models](./DGE/multi-condition-DE.png)
+
+**muscat**多样本多组 scRNA-seq 分析工具（Crowell 等人，2020）为多样本、多组、多（细胞）亚群 scRNA-seq 数据中的差异表达（DS）分析提供了多种方法和可视化工具，包括细胞水平的混合模型、基于聚合‘伪批量’数据的方法，以及一个灵活的模拟平台，可以模拟单样本和多样本 scRNA-seq 数据。
+
+[Crowell H L, Soneson C, Germain P L, et al. Muscat detects subpopulation-specific state transitions from multi-sample multi-condition single-cell transcriptomics data[J]. Nature communications, 2020, 11(1): 6077.](https://www.nature.com/articles/s41467-020-19894-4)
+
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
