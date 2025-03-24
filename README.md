@@ -307,6 +307,10 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 ![cell](./cell_annotation/cell_identity.png)
 
+**Our results highlight the efficacy of simple methods, especially the Wilcoxon rank-sum test, Student’s t-test, and logistic regression.**
+
+[Pullin J M, McCarthy D J. A comparison of marker gene selection methods for single-cell RNA sequencing data[J]. Genome Biology, 2024, 25(1): 56.](https://link.springer.com/article/10.1186/s13059-024-03183-0)
+
 *Automated annotation*
 
 **1-Small marker genes(e.g.,size < 20)**
@@ -367,6 +371,10 @@ Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化
 [Tran H T N, Ang K S, Chevrier M, et al. A benchmark of batch-effect correction methods for single-cell RNA sequencing data[J]. Genome biology, 2020, 21: 1-32.](https://link.springer.com/article/10.1186/s13059-019-1850-9)
 
 [Emmanúel Antonsson S, Melsted P. Batch correction methods used in single cell RNA-sequencing analyses are often poorly calibrated[J]. bioRxiv, 2024: 2024.03. 19.585562.](https://www.biorxiv.org/content/10.1101/2024.03.19.585562v1.abstract)
+
+### 3-12:Identification of conserved markers in all conditions
+
+![DGE](./DGE/differential_gene_expression.jpg)
 
 ## 4.资源链接
 
