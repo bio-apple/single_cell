@@ -390,6 +390,8 @@ https://hbctraining.github.io/scRNA-seq_online/lessons/09_merged_SC_marker_ident
 
 Differential state analysis with muscat：https://www.bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html
 
+Differential Gene Expression Analysis in scRNA-seq Data between Conditions with Biological Replicates:https://www.10xgenomics.com/analysis-guides/differential-gene-expression-analysis-in-scrna-seq-data-between-conditions-with-biological-replicates
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
