@@ -386,6 +386,7 @@ Pseudobulk（伪批量）：有时scRNA-seq实验只有少量样本或没有生�
 
 [Crowell H L, Soneson C, Germain P L, et al. Muscat detects subpopulation-specific state transitions from multi-sample multi-condition single-cell transcriptomics data[J]. Nature communications, 2020, 11(1): 6077.](https://www.nature.com/articles/s41467-020-19894-4)
 
+https://hbctraining.github.io/scRNA-seq_online/lessons/09_merged_SC_marker_identification.html
 
 ## 4.资源链接
 
