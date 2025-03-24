@@ -388,7 +388,7 @@ Pseudobulk（伪批量）：有时scRNA-seq实验只有少量样本或没有生�
 
 https://hbctraining.github.io/scRNA-seq_online/lessons/09_merged_SC_marker_identification.html
 
-https://www.bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html
+Differential state analysis with muscat：https://www.bioconductor.org/packages/release/bioc/vignettes/muscat/inst/doc/analysis.html
 
 ## 4.资源链接
 
