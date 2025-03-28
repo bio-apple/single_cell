@@ -101,14 +101,14 @@ Cell Ranger 使用转录本注释 GTF 文件将 reads 分类为外显子区（ex
 
 常见的细胞质量控制 (QC) 步骤主要基于以下三个指标：
 
-        每个条形码的 UMI 计数深度 (count depth)
-        每个条形码检测到的基因数 (gene count per barcode)
-        每个条形码中线粒体基因 UMI 计数的比例 (fraction of mitochondrial counts per barcode)
+    每个条形码的 UMI 计数深度 (count depth)
+    每个条形码检测到的基因数 (gene count per barcode)
+    每个条形码中线粒体基因 UMI 计数的比例 (fraction of mitochondrial counts per barcode)
 
 这些异常条形码可能对应于：
 
-        凋亡细胞 (dying cells)、细胞膜破损的细胞 (cells with broken membranes)：条形码的 UMI 计数低、检测到的基因数少、但线粒体基因占比高，则可能是细胞膜破损导致胞质mRNA泄漏，仅剩线粒体mRNA被保留下来。 但UMI计数较低、基因数较少的细胞，也可能属于静息 (quiescent) 细胞群，并非一定是低质量细胞
-        多胞 (doublets, 即两个或多个细胞的 mRNA 被误认为是单个细胞的表达数据)：UMI计数异常高、检测到的基因数异常多，可能代表多胞，通常需要设定高UMI计数阈值来过滤掉潜在的多胞。但UMI计数较高的细胞，可能只是细胞体积较大，并不一定是多胞。
+    凋亡细胞 (dying cells)、细胞膜破损的细胞 (cells with broken membranes)：条形码的 UMI 计数低、检测到的基因数少、但线粒体基因占比高，则可能是细胞膜破损导致胞质mRNA泄漏，仅剩线粒体mRNA被保留下来。 但UMI计数较低、基因数较少的细胞，也可能属于静息 (quiescent) 细胞群，并非一定是低质量细胞
+    多胞 (doublets, 即两个或多个细胞的 mRNA 被误认为是单个细胞的表达数据)：UMI计数异常高、检测到的基因数异常多，可能代表多胞，通常需要设定高UMI计数阈值来过滤掉潜在的多胞。但UMI计数较高的细胞，可能只是细胞体积较大，并不一定是多胞。
 
 ![considerations_in_quality_control](considerations_in_quality_control/Overview_of_unimodal_analysis_steps_for_scRNA-seq.png)
 
@@ -165,18 +165,18 @@ normalize_total()：将每个细胞的 counts 除以该细胞的总 counts（测
 
 单细胞RNA-seq 数据具有以下特点
 
-        高维性：每个细胞可能测定数万个基因的表达量。
-        稀疏性：由于技术限制，许多基因在大多数细胞中表达为零（dropout）。
-        噪声：数据中存在技术噪声（如测序深度差异）和生物学无关的变异（如管家基因的均匀表达）。
+    高维性：每个细胞可能测定数万个基因的表达量。
+    稀疏性：由于技术限制，许多基因在大多数细胞中表达为零（dropout）。
+    噪声：数据中存在技术噪声（如测序深度差异）和生物学无关的变异（如管家基因的均匀表达）。
 
 如果直接使用所有基因进行分析：
 
-        计算成本高。
-        噪声可能会掩盖生物学信号，导致降维或聚类结果不准确。
+    计算成本高。
+    噪声可能会掩盖生物学信号，导致降维或聚类结果不准确。
 
 因此筛选Highly Variable Genes，HVG高变基因是单细胞数据中表达变异较大的基因，反映细胞间的生物学差异。为了增强PCA对生物学差异的捕捉能力，常规方法会选择表达变化较大的基因，如前2,000个变异最大的基因）
 
-        pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
+    pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
 
 *HVG selection methods can be classified into four categories:*
 
@@ -196,7 +196,7 @@ ScaleData通常在NormalizeData（归一化）和FindVariableFeatures（筛选�
 
 可选的回归（Regress out）：可以选择移除不需要的变异来源，例如细胞周期效应、线粒体基因比例或批次效应（通过参数vars.to.regress指定）
 
-        seurat_obj <- ScaleData(seurat_obj) # 缩放数据 
+    seurat_obj <- ScaleData(seurat_obj) # 缩放数据 
 
 ### 3-7:Dimensionality Reduction:PCA
 
@@ -205,8 +205,8 @@ ScaleData通常在NormalizeData（归一化）和FindVariableFeatures（筛选�
 PCA：用于前期降维、去噪或输入下游分析（如聚类），不建议直接用于最终可视化。在我们运行PCA之后，需要决定将哪些主成分（PCs）纳入下游分析。我们希望纳入足够多的PCs以保留生物学信号，但又要尽量减少PCs的数量，以避免数据中的噪声干扰。根据每个主成分解释的方差百分比对主成分进行排名
 In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that the majority of true signal is captured in the first 10 PCs.
 
-        pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
-        ElbowPlot(pbmc)
+    pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+    ElbowPlot(pbmc)
 
 ![PCA](./PCA_KNN_cluster_tSNE_UMAP/PCA.png)
 
@@ -222,22 +222,22 @@ NN-Descent（Nearest Neighbor Descent）是一种高效的KNN搜索算法，通�
 
 *小型数据集:<10,000细胞*
 
-        可以选择精确KNN，因为计算时间通常在分钟级别，易于处理。
-        工具实现：Seurat的默认KNN，或Scanpy中设置use_approx=False。
+    可以选择精确KNN，因为计算时间通常在分钟级别，易于处理。
+    工具实现：Seurat的默认KNN，或Scanpy中设置use_approx=False。
 
 *中型数据集:10,000-100,000细胞*
 
-        NN-Descent或类似近似算法是更好的选择，兼顾速度和精度。
-        工具实现：Scanpy默认设置，或Seurat中启用近似方法。
+    NN-Descent或类似近似算法是更好的选择，兼顾速度和精度。
+    工具实现：Scanpy默认设置，或Seurat中启用近似方法。
 
 *大型数据集:>100,000细胞*
 
-        强烈推荐NN-Descent或更高效的近似算法（如HNSW）。
-        精确KNN几乎不可行，可能需要数小时甚至数天，而NN-Descent可在几分钟内完成。
+    强烈推荐NN-Descent或更高效的近似算法（如HNSW）。
+    精确KNN几乎不可行，可能需要数小时甚至数天，而NN-Descent可在几分钟内完成。
 
 通常，K的值根据数据集的大小设置为5到100之间。 K值默认scanpy是15，Seurat是20.
 
-        pbmc <- FindNeighbors(pbmc, dims = 1:10)
+    pbmc <- FindNeighbors(pbmc, dims = 1:10)
 
 SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两个细胞是否“共享”相同的邻居。通过这种方式，增强了相似性定义的鲁棒性。 Seurat and Scanpy使用SNN进行接下来的cluster分析，Suggest a resolution of **0.4-1.2** for data sets of ~3,000 cells. 算法选择：
 
@@ -249,25 +249,22 @@ SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两�
 
 4:**Leiden algorithm** is an improved version of the Louvain algorithm
         
-        pbmc <- FindClusters(pbmc, resolution = 0.5)
+    pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 ### 3-9:Visualize clusters of cells
 
 t-distributed stochastic neighbor embedding (t-SNE)和Uniform Manifold Approximation and Projection (UMAP) 是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
 
-        pbmc <- RunUMAP(pbmc, dims = 1:10)
+    pbmc <- RunUMAP(pbmc, dims = 1:10)
 
 ![UMAP](./PCA_KNN_cluster_tSNE_UMAP/UMAP.png)
 
 tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
-– UMAP is quite a bit quicker than tSNE
-
-– UMAP can preserve more global structure than tSNE
-
-– UMAP can run on raw data without PCA preprocessing
-
-– UMAP can allow new data to be added to an existing projection
+    – UMAP is quite a bit quicker than tSNE
+    – UMAP can preserve more global structure than tSNE
+    – UMAP can run on raw data without PCA preprocessing
+    – UMAP can allow new data to be added to an existing projection
 
 [Rich J M, Moses L, Einarsson P H, et al. The impact of package selection and versioning on single-cell RNA-seq analysis[J]. bioRxiv, 2024.](https://www.biorxiv.org/content/10.1101/2024.04.04.588111v2)
 
