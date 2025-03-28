@@ -398,8 +398,6 @@ Differential Gene Expression Analysis in scRNA-seq Data between Conditions with 
 
 细胞轨迹分析的方法和软件非常之多，大致可以概括为两种方法，一种是以monocle软件为代表的**拟时序分析（pseudotime analysis）**，另一种则是以velocyto /scVelo为主的**RNA速度分析（RNA velocity）**。RNA速度通过分析未剪接（unspliced）和已剪接（spliced）mRNA的比例来推断细胞状态的未来变化，而轨迹推断则构建细胞间的发育路径。
 
-![Monocle](./trajectories/Monocle3.png)
-
 ![scVelo](./trajectories/Monocle3_scVelo.png)
 
 **功能定位**
@@ -419,6 +417,8 @@ Monocle3 只需标准的表达矩阵，适用范围更广，但若要结合速�
 一个常见的分析流程是：先用 scVelo 计算速度向量，再将结果导入 Monocle3，将速度箭头叠加到轨迹图上，验证方向一致性。这种组合能同时捕捉动态和结构信息。
 
 **Pseudotime analysis工具比较：**
+
+![Monocle](./trajectories/Monocle3.png)
 
 [Saelens W, Cannoodt R, Todorov H, et al. A comparison of single-cell trajectory inference methods[J]. Nature biotechnology, 2019, 37(5): 547-554.](https://www.nature.com/articles/s41587-019-0071-9)
 
