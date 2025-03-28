@@ -392,6 +392,47 @@ Differential state analysis with muscat：https://www.bioconductor.org/packages/
 
 Differential Gene Expression Analysis in scRNA-seq Data between Conditions with Biological Replicates:https://www.10xgenomics.com/analysis-guides/differential-gene-expression-analysis-in-scrna-seq-data-between-conditions-with-biological-replicates
 
+### 3-13:Inferring trajectories
+
+![pseudotime_RNA-velocity](./trajectories/scrna_seq_trajectory_analysis.png)
+
+细胞轨迹分析的方法和软件非常之多，大致可以概括为两种方法，一种是以monocle软件为代表的拟时序分析（pseudotime analysis），另一种则是以velocyto /scVelo为主的RNA速度分析（RNA velocity）。RNA速度通过分析未剪接（unspliced）和已剪接（spliced）mRNA的比例来推断细胞状态的未来变化，而轨迹推断则构建细胞间的发育路径。
+
+**功能定位**
+
+scVelo: 擅长通过 RNA 速度揭示细胞的短期动态变化（“下一步去哪”），适合研究快速分化或瞬时状态转换。
+
+Monocle3: 擅长构建长期发育路径（“从哪来到哪去”），通过伪时间分析细胞的全局轨迹。
+
+**数据需求**
+
+scVelo 需要特殊的预处理（如 Velocyto 管道）来提取未剪接和已剪接 mRNA 信息，对数据质量要求较高。
+
+Monocle3 只需标准的表达矩阵，适用范围更广，但若要结合速度分析需额外步骤。
+
+**整合潜力**
+
+一个常见的分析流程是：先用 scVelo 计算速度向量，再将结果导入 Monocle3，将速度箭头叠加到轨迹图上，验证方向一致性。这种组合能同时捕捉动态和结构信息。
+
+**Pseudotime analysis工具比较：**
+
+[Saelens W, Cannoodt R, Todorov H, et al. A comparison of single-cell trajectory inference methods[J]. Nature biotechnology, 2019, 37(5): 547-554.](https://www.nature.com/articles/s41587-019-0071-9)
+
+如果数据规模较大（>10,000 细胞）或者存在复杂分化路径 → Monocle3
+
+如果数据规模较小（<5,000 细胞）并且分化路径相对简单 → Monocle2
+
+如果你希望与 Seurat 等其他分析工具无缝整合 → Monocle3
+
+**CellRank2** 是一个专门设计用于结合RNA速度和轨迹分析的工具。
+
+[Weiler P, Lange M, Klein M, et al. CellRank 2: unified fate mapping in multiview single-cell data[J]. Nature Methods, 2024, 21(7): 1196-1205.](https://www.nature.com/articles/s41592-024-02303-9)
+
+**关联资源**
+
+Trajectory Analysis using 10x Genomics Single Cell Gene Expression Data:https://www.10xgenomics.com/analysis-guides/trajectory-analysis-using-10x-Genomics-single-cell-gene-expression-data
+
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
