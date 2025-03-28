@@ -436,6 +436,7 @@ Monocle3 只需标准的表达矩阵，适用范围更广，但若要结合速�
 
 Trajectory Analysis using 10x Genomics Single Cell Gene Expression Data:https://www.10xgenomics.com/analysis-guides/trajectory-analysis-using-10x-Genomics-single-cell-gene-expression-data
 
+![10x](./trajectories/ag-trajectory-analysis-tutorial.png)
 
 ## 4.资源链接
 
