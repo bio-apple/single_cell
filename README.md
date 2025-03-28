@@ -402,9 +402,9 @@ Differential Gene Expression Analysis in scRNA-seq Data between Conditions with 
 
 **功能定位**
 
-scVelo: 擅长通过 RNA 速度揭示细胞的短期动态变化（“下一步去哪”），适合研究快速分化或瞬时状态转换。
+[scVelo](https://scvelo.readthedocs.io/en/stable/): 擅长通过 RNA 速度揭示细胞的短期动态变化（“下一步去哪”），适合研究快速分化或瞬时状态转换。
 
-Monocle3: 擅长构建长期发育路径（“从哪来到哪去”），通过伪时间分析细胞的全局轨迹。
+[Monocle3](https://cole-trapnell-lab.github.io/monocle3/): 擅长构建长期发育路径（“从哪来到哪去”），通过伪时间分析细胞的全局轨迹。
 
 **数据需求**
 
