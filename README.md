@@ -410,7 +410,7 @@ Differential Gene Expression Analysis in scRNA-seq Data between Conditions with 
 
 scVelo 需要特殊的预处理（如 Velocyto 管道）来提取未剪接和已剪接 mRNA 信息，对数据质量要求较高。
 
-Monocle3 只需标准的表达矩阵，适用范围更广，但若要结合速度分析需额外步骤。
+Monocle3 只需标准的表达矩阵，适用范围更广，但若要结合速度分析需额外步骤
 
 **整合潜力**
 
