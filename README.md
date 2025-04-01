@@ -112,6 +112,8 @@ Cell Ranger 使用转录本注释 GTF 文件将 reads 分类为外显子区（ex
 
 ![considerations_in_quality_control](considerations_in_quality_control/Overview_of_unimodal_analysis_steps_for_scRNA-seq.png)
 
+[Heumos L, Schaar A C, Lance C, et al. Best practices for single-cell analysis across modalities[J]. Nature Reviews Genetics, 2023, 24(8): 550-572.](https://www.nature.com/articles/s41576-023-00586-w)
+
 There is no absolute standard for the setting of filter thresholds, which usually depends on the type of cell and tissue being analysed. Lambrechts et al. filtered out cells with ≤ 100 or ≥ 6000 expressed genes, ≤ 200 UMIs and ≥ 10% mitochondrial genes as described in their study. Fan et al. retained good quality cells using the following parameters: (1) 200 < total number of expressed genes per cell (nGenes) < 2500; (2) 300 < total number of UMIs per cell (nUMIs) < 15000; and (3) percentage of UMIs mapped to mitochondrial genes (MT%) < 10%.
 
 [Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
