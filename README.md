@@ -437,6 +437,78 @@ Trajectory Analysis using 10x Genomics Single Cell Gene Expression Data:https://
 
 ![10x](./trajectories/ag-trajectory-analysis-tutorial.png)
 
+### 3-14:Gene set enrichment analysis
+
+Can be performed if you have statistics for all genes detected in the scRNAseq dataset, when using limma or edgeR.
+
+**方法**
+
+![GSEA_ORA](./GSEA/GSEA_ORA.png)
+
+![ORA](./GSEA/ora.png)
+
+**数据库**
+
+MSigDB, GeneOntology, **KEGG or Reactome or WikiPathways** 
+
+PROGENy for signalling pathways
+
+DoRothEA for transcription factors (TFs)
+
+关于MSigDB
+
+    H：标志基因集（Hallmark Gene Sets）：高度精炼的基因集，代表特定的生物学过程或状态（如增殖、炎症、凋亡等）。
+    C1：染色体位置基因集（Positional Gene Sets）：基于基因在染色体上的位置。
+    C2： curated基因集（Curated Gene Sets）：来源于文献、数据库和其他实验数据，包括路径数据库（如KEGG、Reactome）和化学/遗传扰动相关的基因集。
+    C3：调控目标基因集（Regulatory Target Gene Sets）：基于转录因子或microRNA的靶基因。
+    C4：计算基因集（Computational Gene Sets）：通过计算方法（如癌症模块）生成的基因集。
+    C5：本体基因集（Ontology Gene Sets）：基于基因本体（Gene Ontology, GO）分类的生物过程、分子功能和细胞组分。
+    C6：致癌特征基因集（Oncogenic Signatures）：与癌症相关的基因集。
+    C7：免疫特征基因集（Immunologic Signatures）：与免疫系统相关的基因集。
+    C8：细胞类型特征基因集（Cell Type Signature Gene Sets）：特定细胞类型的标记基因。
+
+**常用工具:**
+
+*clusterProfiler*
+
+![clusterprofiler](./GSEA/clusterprofile.png)
+
+    gseGO (): GSEA of GO terms using all ranked genes
+    gseKEGG (): GSEA of KEGG pathways using all ranked genes
+    GSEA (): GSEA of custom gene set collection using all ranked genes
+
+*Pagoda2*:https://github.com/kharchenkolab/pagoda2
+
+    Pagoda2 是一个专为 单细胞 RNA-seq（scRNA-seq） 设计的富集分析工具，主要用于探索细胞内的功能性变异，尤其适用于大规模单细胞数据集。适用于异质性高的细胞群，比如肿瘤微环境、免疫细胞类型、神经元亚型等。相比于传统的 GSEA/ORA，Pagoda2 不依赖基因排序，而是直接在细胞表达矩阵上检测变异性较大的功能基因集，从而揭示细胞内的重要生物学通路。Pagoda2的核心优势在于它能够处理单细胞数据的稀疏性和噪声，同时结合统计方法和可视化功能，帮助研究人员理解细胞间的生物学差异。
+
+*Decoupler*:https://saezlab.github.io/decoupleR/
+
+    Decoupler不是单一的分析方法，而是集成了多种统计和计算方法（如GSEA、GSVA、PROGENy、DoRothEA等）的“工具箱”。
+
+    Decoupler 主要功能
+
+    支持多种基因集富集分析方法：
+    Over-Representation Analysis（ORA）（超几何检验）
+    Gene Set Enrichment Analysis（GSEA）
+    Single-sample Gene Set Enrichment Analysis（ssGSEA）
+    Gene Set Variation Analysis（GSVA）
+    Univariate Linear Model Analysis（ULM）
+    Weighted Mean Z-score
+
+    兼容多种基因集数据库：
+    MSigDB（Molecular Signatures Database）
+    KEGG（Kyoto Encyclopedia of Genes and Genomes）
+    Reactome
+    WikiPathways
+    PROGENy（Signaling Pathway Activity Scores）
+    DoRothEA（Transcription Factor Activity Inference）
+
+*AUCell: Identifying cells with active gene sets*:https://bioconductor.org/packages/release/bioc/vignettes/AUCell/inst/doc/AUCell.html
+
+    AUCell（Area Under the Curve Cell scoring） 是一种用于单细胞 RNA 测序（scRNA-seq）数据的基因集活性评分方法，基于AUC（曲线下面积）计算每个细胞中目标基因集的活跃度。不需要基因表达归一化，可直接用于 UMI 计数矩阵、适用于各类基因集数据库（MSigDB、Reactome、WikiPathways、KEGG）可与 Seurat、SCENIC、monocle3 等 scRNA-seq 分析框架结合
+
+![AUCell](./GSEA/AUCell.png)
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
