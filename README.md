@@ -451,9 +451,9 @@ Can be performed if you have statistics for all genes detected in the scRNAseq d
 
 MSigDB, GeneOntology, **KEGG or Reactome or WikiPathways** 
 
-PROGENy for signalling pathways
+PROGENy for signalling pathways:https://saezlab.github.io/progeny/articles/ProgenySingleCell.html
 
-DoRothEA for transcription factors (TFs)
+DoRothEA for transcription factors (TFs):https://decoupler-py.readthedocs.io/en/latest/notebooks/dorothea.html
 
 *MSigDB*:https://www.gsea-msigdb.org/gsea/msigdb
 
