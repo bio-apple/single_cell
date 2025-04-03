@@ -455,7 +455,9 @@ PROGENy for signalling pathways
 
 DoRothEA for transcription factors (TFs)
 
-关于MSigDB
+*MSigDB*:https://www.gsea-msigdb.org/gsea/msigdb
+
+![MSigDB](./GSEA/msigdb.png)
 
     H：标志基因集（Hallmark Gene Sets）：高度精炼的基因集，代表特定的生物学过程或状态（如增殖、炎症、凋亡等）。
     C1：染色体位置基因集（Positional Gene Sets）：基于基因在染色体上的位置。
