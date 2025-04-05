@@ -511,6 +511,54 @@ DoRothEA for transcription factors (TFs):https://decoupler-py.readthedocs.io/en/
 
 ![AUCell](./GSEA/AUCell.png)
 
+### 3-15:Cell-cell communication
+
+![Cell-cell communication](Cell-cell_communication/cell_cell_communication.png)
+
+单细胞数据分析中的 Cell-Cell Communication (CCC) 研究旨在解析细胞间通过信号分子（如配体-受体互作）建立的通信网络，揭示微环境中细胞互作的生物学机制。
+
+2. 分析流程
+
+(1) 数据准备
+
+    单细胞转录组数据（scRNA-seq）：需包含细胞类型注释（如聚类结果）。
+    配体-受体数据库：
+    公共数据库：CellPhoneDB、CellChatDB、NicheNet、SINGLE、LIANA等。
+    自定义数据库：整合已知的LRI对（如从KEGG、Reactome等途径获取）。
+(2) 关键步骤
+
+    表达筛选：保留在特定细胞类型中显著表达的配体和受体基因（如阈值：表达量 > 10%细胞，或平均表达 > 0.1）。
+    互作评分：
+    基于表达量：如CellPhoneDB的均值法，或CellChat的概率模型。
+    统计检验：通过置换检验评估互作显著性（如p-value < 0.05）。
+    网络构建：生成细胞类型间的通信网络（边权重=互作强度）。
+(3) 下游分析
+
+    差异通信：比较不同组别（如疾病 vs 对照）的通信强度变化。
+    通路富集：分析显著互作涉及的信号通路（如TGF-β、WNT）。
+    可视化：
+    网络图：展示细胞类型间的互作（如Circle plot、Hierarchy plot）。
+    热图：显示配体-受体对的表达模式。
+
+3. 常用工具
+
+|工具	| 特点  |
+|--|-----|
+|CellPhoneDB|	考虑蛋白复合物结构，支持多亚基受体/配体。|
+|CellChat|	基于概率模型，提供通路级分析和丰富的可视化。|
+|NicheNet|	整合转录调控网络，预测配体-靶基因关联。|
+|LIANA|	整合多种方法（如CellPhoneDB、SingleCellSignalR），支持共识分析。|
+
+4. LIANA：多方法整合的细胞间通讯分析框架
+
+LIANA（LIgand-receptor ANalysis frAmework）是一个开源的 细胞间通讯（Cell-Cell Communication, CCC）分析平台，专为单细胞转录组（scRNA-seq）数据设计。其核心创新在于 整合多种CCC推断算法，通过共识分析提高结果的可靠性，避免单一方法的局限性。
+
+![LIANA](./Cell-cell_communication/liana.png)
+
+5. NicheNet 深度解析：基于配体-受体-靶基因网络的细胞通讯分析工具
+
+![NicheNet](./Cell-cell_communication/NicheNet.png)
+
 ## 4.资源链接
 
 **A useful tool to estimate how many cells to sequence has been developed by the Satija Lab**:https://satijalab.org/howmanycells/
