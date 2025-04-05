@@ -549,7 +549,7 @@ DoRothEA for transcription factors (TFs):https://decoupler-py.readthedocs.io/en/
 |NicheNet|	整合转录调控网络，预测配体-靶基因关联。|
 |LIANA|	整合多种方法（如CellPhoneDB、SingleCellSignalR），支持共识分析。|
 
-4. LIANA：多方法整合的细胞间通讯分析框架
+4. LIANA：多方法整合的细胞间通讯分析框架：https://saezlab.github.io/liana/articles/liana_tutorial.html
 
 LIANA（LIgand-receptor ANalysis frAmework）是一个开源的 细胞间通讯（Cell-Cell Communication, CCC）分析平台，专为单细胞转录组（scRNA-seq）数据设计。其核心创新在于 整合多种CCC推断算法，通过共识分析提高结果的可靠性，避免单一方法的局限性。
 
