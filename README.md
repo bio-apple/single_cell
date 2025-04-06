@@ -75,7 +75,7 @@ Cell Ranger 使用转录本注释 GTF 文件将 reads 分类为外显子区（ex
 
 当测序样本为细胞核（nuclei）时，大量 reads 来自未剪接的转录本，并比对到内含子区域。为了将这些内含子 reads 计入 UMI 计数，可以在运行 cell ranger count 和 cell ranger multi 管道时使用 --include-introns 选项。如果启用了该选项，则所有以正义链方向比对到单个基因的 reads（包括上图中标记为转录组的蓝色 reads、外显子区的浅蓝色 reads 和内含子区的红色 reads）都会被保留用于 UMI 计数。使用 --include-introns 选项后，无需额外创建自定义的 “pre-mRNA” 参考基因组（该参考基因组通常会将整个基因体定义为外显子）。
 
-### 3-2:considerations_in_Quality control
+### 3-2:Quality control
 **Seurat script**
 
     library(dplyr)
@@ -118,7 +118,13 @@ There is no absolute standard for the setting of filter thresholds, which usuall
 
 [Kim G D, Lim C, Park J. A practical handbook on single-cell RNA sequencing data quality control and downstream analysis[J]. Molecules and Cells, 2024, 47(9): 100103.](https://www.sciencedirect.com/science/article/pii/S1016847824001286)
 
-### 3-3:Mitochondrial gene content cutoff
+**Doublet Detection**
+
+![Doublet Detection](./considerations_in_quality_control/doublet_detection.jpeg)
+
+推荐使用分析软件：*scDblFinder*
+
+**Mitochondrial gene content cutoff**
 
 线粒体基因比例较高的细胞，可能参与呼吸代谢 (respiratory processes)，并不一定是死细胞。 因此，在设定QC阈值时，应该联合多个QC指标进行筛选，并尽量使用宽松的阈值，以免误删真正的细胞群体。未来，可以使用多变量QC依赖性模型来提高QC筛选的灵敏度。
 
@@ -136,7 +142,7 @@ QC metrics vary by tissue. (X-axis) Fraction of mitochondrial reads (A, B), gene
 
 [Subramanian A, Alperovich M, Yang Y, et al. Biology-inspired data-driven quality control for scientific discovery in single-cell transcriptomics[J]. Genome biology, 2022, 23(1): 267.](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-022-02820-w)
 
-### 3-4:remove background noise(remove_ambient_RNA_contamination)
+**remove background noise(remove_ambient_RNA_contamination)**
 
 在单细胞 RNA 测序 (scRNA-seq) 中，空胞指的是： 含有条形码 (barcode) 但没有真正的细胞，仅含有少量环境 RNA (ambient RNA)。 这些 RNA 可能来源于细胞裂解后的游离 RNA，在实验过程中随机进入微滴 (droplet) 或孔板 (well) 中。 在单细胞分离过程中，一些细胞可能受损、破裂或处于凋亡状态，导致其RNA内容物释放到周围的溶液中。溶液中的游离RNA：这些RNA可能悬浮在细胞悬液中，并在液滴形成（如基于液滴的scRNA-seq方法，例如10x Genomics）时被意外封装到其他细胞的液滴中。例如，取样或实验操作过程中引入的外源性RNA
 
@@ -144,7 +150,7 @@ We use our genotype-based estimates to evaluate the performance of three methods
 
 [Janssen P, Kliesmete Z, Vieth B, et al. The effect of background noise and its removal on the analysis of single-cell expression data[J]. Genome biology, 2023, 24(1): 140.](https://link.springer.com/article/10.1186/s13059-023-02978-x)
 
-### 3-5:Normalization
+### 3-3:Normalization
 
 Ahlmann-Eltze 和 Huber 在 2023 年发表的一项最新基准研究（如下文）对 22 种不同的单细胞数据转换方法进行了比较。结果表明，一种相对简单的方法——加伪计数（pseudo-count）的对数转换（log transformation）结合主成分分析（PCA），在性能上与更复杂的方法相当，甚至更优。在单细胞RNA测序数据分析中，矩阵标志化（normalization）后进行log转化时，通常是以自然对数（底数为e）或以10为底的对数（log10）为主，而以2为底的对数（log2）较少见。
 
@@ -163,7 +169,7 @@ normalize_total()：将每个细胞的 counts 除以该细胞的总 counts（测
 
 **备注**:单细胞 RNA-seq 数据中，每个细胞的总 UMI 计数通常在几百到几万之间（例如 1,000 到 50,000）。如果直接用占比（counts / total counts），结果会非常小（例如 10⁻⁵ 到 10⁻³），不便于直观理解和后续计算。 乘以 10,000 后，标准化数据的值通常落在 0 到几百的范围内（经过 log 转化后为 0 到 5 左右），这与基因表达的生物学动态范围较为吻合，也方便可视化（如热图、散点图）。 为什么不用 1,000 或 100,000？如果缩放因子太小（如 1,000），标准化后的值范围会偏小，可能导致 log 转化后的数值过于压缩，丢失分辨率。 如果缩放因子太大（如 100,000），数值范围会过大，log 转化后可能放大噪声，尤其是在低表达基因中。10,000 是一个折中的选择，既不过分压缩也不过分放大，同时保持数据的动态范围适合大多数下游分析（如聚类、差异表达分析）。
 
-### 3-6:highly_variable_gene
+### 3-4:highly_variable_gene
 
 单细胞RNA-seq 数据具有以下特点
 
@@ -200,7 +206,7 @@ ScaleData通常在NormalizeData（归一化）和FindVariableFeatures（筛选�
 
     seurat_obj <- ScaleData(seurat_obj) # 缩放数据 
 
-### 3-7:Dimensionality Reduction:PCA
+### 3-5:Dimensionality Reduction:PCA
 
 在scRNA-seq数据分析中，我们通过寻找与已知细胞状态或细胞周期阶段相关的细胞身份来描述数据集中的细胞结构。这一过程通常被称为细胞身份注释。
 为此，我们将细胞组织成簇，以推断相似细胞的身份。聚类本身是一个常见的无监督机器学习问题。我们可以通过在降维后的表达空间中最小化簇内距离来得出簇。在这种情况下，表达空间决定了细胞在降维表示下的基因表达相似性。例如，这种低维表示可以通过主成分分析（PCA）确定.
@@ -212,7 +218,7 @@ In this example, we can observe an ‘elbow’ around PC 9-10, suggesting that t
 
 ![PCA](./PCA_KNN_cluster_tSNE_UMAP/PCA.png)
 
-### 3-8:KNN+SNN(cluster)
+### 3-6:KNN+SNN(cluster)
 
 KNN是一种基于距离的方法，用于找到每个细胞的“最近邻居”。在单细胞分析中，通常基于细胞的基因表达谱（通常是降维后的数据，比如PCA或t-SNE/UMAP的坐标）来计算细胞之间的距离（如欧几里得距离）。
 
@@ -253,7 +259,7 @@ SNN是KNN的改进版本，它不仅考虑直接的邻居关系，还关注两�
         
     pbmc <- FindClusters(pbmc, resolution = 0.5)
 
-### 3-9:Visualize clusters of cells
+### 3-7:Visualize clusters of cells
 
 t-distributed stochastic neighbor embedding (t-SNE)和Uniform Manifold Approximation and Projection (UMAP) 是单细胞数据集常用的降维和可视化技术。UMAP最近已成为这类分析的黄金标准，因为它具有更高的计算效率并且能更好地保持全局结构；尽管与t-SNE一样，它在局部距离上的准确性可能更高。
 
@@ -270,7 +276,7 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 
 [Rich J M, Moses L, Einarsson P H, et al. The impact of package selection and versioning on single-cell RNA-seq analysis[J]. bioRxiv, 2024.](https://www.biorxiv.org/content/10.1101/2024.04.04.588111v2)
 
-### 3-10:cell Annotation
+### 3-8:cell Annotation
 
 手动注释与自动化注释的详细比较
 
@@ -327,7 +333,7 @@ tSNE is slow.tSNE doesn’t scale well to large numbers of cells (10k+)
 Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化单细胞注释工具。它使用 Seurat label transfer（标签转移） 方法，将新的单细胞数据集投影到一个 预训练的参考数据库 上，以实现快速、自动的细胞类型注释。
 相关软件:**Azimuth (Seurat超大规模数据（10K~百万细胞）)**、**SingleR中~大型数据（≥10K 细胞）**
 
-### 3-11:batch_effect
+### 3-9:batch_effect
 
 ![batch effect](./experiments_batch_effect/10-Figure1-1.png)
 
@@ -371,7 +377,7 @@ Azimuth 是 Seurat 开发团队提供的一种 基于参考数据库的自动化
 
 [Emmanúel Antonsson S, Melsted P. Batch correction methods used in single cell RNA-sequencing analyses are often poorly calibrated[J]. bioRxiv, 2024: 2024.03. 19.585562.](https://www.biorxiv.org/content/10.1101/2024.03.19.585562v1.abstract)
 
-### 3-12:Identification of conserved markers in all conditions
+### 3-10:Identification of conserved markers in all conditions
 
 ![DGE](./DGE/differential_gene_expression.jpg)
 
@@ -391,7 +397,7 @@ Differential state analysis with muscat：https://www.bioconductor.org/packages/
 
 Differential Gene Expression Analysis in scRNA-seq Data between Conditions with Biological Replicates:https://www.10xgenomics.com/analysis-guides/differential-gene-expression-analysis-in-scrna-seq-data-between-conditions-with-biological-replicates
 
-### 3-13:Inferring trajectories
+### 3-11:Inferring trajectories
 
 ![pseudotime_RNA-velocity](./trajectories/scrna_seq_trajectory_analysis.png)
 
@@ -437,7 +443,7 @@ Trajectory Analysis using 10x Genomics Single Cell Gene Expression Data:https://
 
 ![10x](./trajectories/ag-trajectory-analysis-tutorial.png)
 
-### 3-14:Gene set enrichment analysis
+### 3-12:Gene set enrichment analysis
 
 Can be performed if you have statistics for all genes detected in the scRNAseq dataset, when using limma or edgeR.
 
@@ -511,7 +517,7 @@ DoRothEA for transcription factors (TFs):https://decoupler-py.readthedocs.io/en/
 
 ![AUCell](./GSEA/AUCell.png)
 
-### 3-15:Cell-cell communication
+### 3-13:Cell-cell communication
 
 ![Cell-cell communication](Cell-cell_communication/cell_cell_communication.png)
 
