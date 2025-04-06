@@ -120,7 +120,7 @@ There is no absolute standard for the setting of filter thresholds, which usuall
 
 **Doublet Detection**
 
-![Doublet Detection](./considerations_in_quality_control/doublet_detection.jpeg)
+<img src="./considerations_in_quality_control/doublet_detection.jpeg" width=1000 height=200>
 
 推荐使用分析软件：*scDblFinder*
 
