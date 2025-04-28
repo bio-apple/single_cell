@@ -585,4 +585,4 @@ LIANA（LIgand-receptor ANalysis frAmework）是一个开源的 细胞间通讯�
 
 **Single-cell RNA-seq data analysis workshop**:https://hbctraining.github.io/scRNA-seq_online/schedule/links-to-lessons.html
 
-
+**Analysis Tutorial: A case study on single-cell RNA sequencing data analysis using Pegasus**：https://pegasus-tutorials.readthedocs.io/en/latest/
