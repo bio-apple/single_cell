@@ -12,11 +12,13 @@ dnf install epel-release -y
 dnf groupinstall -y "Development Tools"
 dnf install -y gcc-c++ gfortran readline-devel zlib-devel bzip2-devel pcre2-devel libcurl-devel openssl-devel libxml2-devel
 dnf install -y hdf5 hdf5-devel python3-pip python3-devel libjpeg-turbo libjpeg-turbo-devel cmake
+</pre>
 
-#安装指定版本的 R
-dnf install -y R-4.2.0
+## 2.安装R
+<pre>dnf install -y R-4.2.0</pre>
 
-#install RStudio Server https://posit.co/download/rstudio-server/
+## 3.安装RStudio Server：https://posit.co/download/rstudio-server/
+<pre>
 wget https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2025.05.1-513-x86_64.rpm
 sudo yum install rstudio-server-rhel-2025.05.1-513-x86_64.rpm
 
@@ -25,20 +27,17 @@ systemctl stop rstudio-server
 sudo rstudio-server verify-installation
 </pre>
 
-## 2.配置R路径/etc/rstudio/rserver.conf
+## 4.配置R路径/etc/rstudio/rserver.conf
 <pre>rsession-which-r=/staging/software/anaconda3/envs/sesame/bin/R</pre>
 
-## 3.确认端口未被占用
+## 5.确认端口未被占用
 <pre>
 #确保 RStudio Server 默认端口（8787）未被其他进程占用。使用以下命令检查端口：
 sudo netstat -tuln | grep 8787
 
 #如果端口已被占用，可以更改 RStudio Server 使用的端口。在 /etc/rstudio/rserver.conf 中添加以下内容来更改端口：
 www-port=8788
-</pre>
 
-## 4.设置端口防火墙
-<pre>
 #检查防火墙状态
 systemctl status firewalld
 
@@ -54,7 +53,7 @@ firewall-cmd --reload
 firewall-cmd --list-ports
 </pre>
 
-## 5.常用rstudio-server命令
+## 6.常用rstudio-server命令
 <pre>
 #启用 rstudio-server 服务：创建开机自动启动的符号链接
 systemctl enable rstudio-server
@@ -72,7 +71,7 @@ systemctl restart rstudio-server
 systemctl stop rstudio-server
 </pre>
 
-## 6.SELinux 可能限制访问，临时关闭测试
+## 7.SELinux 可能限制访问，临时关闭测试(非必须)
 <pre>
 #关闭 SELinux
 setenforce 0
@@ -86,7 +85,7 @@ Permissive（警告模式，不阻止，只记录）
 Disabled（关闭）
 </pre> 
 
-## 7.如果遇到登录或启动 R session 的问题，可以看日志：
+## 8.如果遇到登录或启动 R session 的问题，可以看日志：
 <pre>
 sudo journalctl -u rstudio-server -f
 
@@ -94,7 +93,7 @@ sudo journalctl -u rstudio-server -f
 cat /var/log/rstudio/rstudio-server.log | tail -n 20
 </pre>
 
-## 8.SSSD (System Security Services Daemon)，它是一个用于管理与远程身份验证服务（如 LDAP 或 Kerberos）交互的守护进程
+## 9.SSSD (System Security Services Daemon)，它是一个用于管理与远程身份验证服务（如 LDAP 或 Kerberos）交互的守护进程
 <pre>
 #清除缓存文件
 rm -rf /var/lib/sss/db/*
@@ -109,10 +108,10 @@ systemctl status sssd
 dnf upgrade sssd
 </pre>
 
-## 9.允许 root 登录
+## 10.允许 root 登录
 <pre>
 #添加 auth-minimum-user-id=0  到/etc/rstudio/rserver.conf文件
 </pre>
 
-## 10.查看进程
+## 11.查看进程
 <pre>ps aux | grep rserver</pre>
