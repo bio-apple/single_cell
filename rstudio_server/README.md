@@ -1,3 +1,15 @@
+## 确保系统上的所有软件包都是最新版本
+<pre>
+sudo dnf update
+</pre>
+
+## 确认端口未被占用
+<pre>
+#确保 RStudio Server 默认端口（8787）未被其他进程占用。使用以下命令检查端口：
+sudo netstat -tuln | grep 8787
+#如果端口已被占用，可以更改 RStudio Server 使用的端口。在 /etc/rstudio/rserver.conf 中添加以下内容来更改端口：
+www-port=8788
+</pre>
 
 
 ## 常用rstudio-server命令
@@ -46,6 +58,8 @@ firewall-cmd --list-ports
 
 ## SSSD (System Security Services Daemon)，它是一个用于管理与远程身份验证服务（如 LDAP 或 Kerberos）交互的守护进程
 <pre>
+#清除缓存文件
+rm -rf /var/lib/sss/db/*
 #然后重启 SSSD 服务
 systemctl restart sssd
 #检查服务状态
