@@ -51,6 +51,7 @@ systemctl stop rstudio-server
 <pre>
 #关闭 SELinux
 setenforce 0
+
 #查看 SELinux 状态
 getenforce
 </pre> 
@@ -58,6 +59,7 @@ getenforce
 ## 6.如果遇到登录或启动 R session 的问题，可以看日志：
 <pre>
 sudo journalctl -u rstudio-server -f
+
 #或者
 cat ~/.local/share/rstudio/log/rsession-ruser.log | tail -n 20
 </pre>
