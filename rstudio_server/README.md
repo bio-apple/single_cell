@@ -23,9 +23,12 @@ sudo yum install rstudio-server-rhel-2025.05.1-513-x86_64.rpm
 #在停止服务的状态验证安装完成性
 systemctl stop rstudio-server
 sudo rstudio-server verify-installation
-</pre> 
+</pre>
 
-## 2.确认端口未被占用
+## 2.配置R路径/etc/rstudio/rserver.conf
+<pre>rsession-which-r=/staging/software/anaconda3/envs/sesame/bin/R</pre>
+
+## 3.确认端口未被占用
 <pre>
 #确保 RStudio Server 默认端口（8787）未被其他进程占用。使用以下命令检查端口：
 sudo netstat -tuln | grep 8787
@@ -34,7 +37,24 @@ sudo netstat -tuln | grep 8787
 www-port=8788
 </pre>
 
-## 3.常用rstudio-server命令
+## 4.设置端口防火墙
+<pre>
+#检查防火墙状态
+systemctl status firewalld
+
+#若未运行，可先启动
+sudo systemctl start firewalld
+sudo systemctl enable firewalld
+
+#开放 8787 端口
+firewall-cmd --permanent --add-port=8787/tcp
+firewall-cmd --reload
+
+#确认端口是否开放
+firewall-cmd --list-ports
+</pre>
+
+## 5.常用rstudio-server命令
 <pre>
 #启用 rstudio-server 服务：创建开机自动启动的符号链接
 systemctl enable rstudio-server
@@ -53,10 +73,7 @@ systemctl stop rstudio-server
 
 </pre>
 
-## 4.配置R路径/etc/rstudio/rserver.conf
-<pre>rsession-which-r=/staging/software/anaconda3/envs/sesame/bin/R</pre>
-
-## 5.SELinux 可能限制访问，临时关闭测试
+## 6.SELinux 可能限制访问，临时关闭测试
 <pre>
 #关闭 SELinux
 setenforce 0
@@ -70,29 +87,12 @@ Permissive（警告模式，不阻止，只记录）
 Disabled（关闭）
 </pre> 
 
-## 6.如果遇到登录或启动 R session 的问题，可以看日志：
+## 7.如果遇到登录或启动 R session 的问题，可以看日志：
 <pre>
 sudo journalctl -u rstudio-server -f
 
 #或者
 cat /var/log/rstudio/rstudio-server.log | tail -n 20
-</pre>
-
-## 7.设置端口防火墙
-<pre>
-#检查防火墙状态
-systemctl status firewalld
-
-#若未运行，可先启动
-sudo systemctl start firewalld
-sudo systemctl enable firewalld
-
-#开放 8787 端口
-firewall-cmd --permanent --add-port=8787/tcp
-firewall-cmd --reload
-
-#确认端口是否开放
-firewall-cmd --list-ports
 </pre>
 
 ## 8.SSSD (System Security Services Daemon)，它是一个用于管理与远程身份验证服务（如 LDAP 或 Kerberos）交互的守护进程
