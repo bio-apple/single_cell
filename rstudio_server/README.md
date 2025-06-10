@@ -8,13 +8,13 @@ sudo dnf update
 #安装 EPEL 仓库
 dnf install epel-release -y
 
-#安装指定版本的 R
-dnf install -y R-4.2.0
-
 #安装必要的开发工具和依赖
 dnf groupinstall -y "Development Tools"
-dnf install -y gcc-c++ gfortran readline-devel zlib-devel bzip2-devel pcre2-devel
+dnf install -y gcc-c++ gfortran readline-devel zlib-devel bzip2-devel pcre2-devel libcurl-devel openssl-devel libxml2-devel
 dnf install -y hdf5 hdf5-devel python3-pip python3-devel libjpeg-turbo libjpeg-turbo-devel cmake
+
+#安装指定版本的 R
+dnf install -y R-4.2.0
 </pre> 
 
 ## 2.确认端口未被占用
@@ -66,7 +66,7 @@ Disabled（关闭）
 sudo journalctl -u rstudio-server -f
 
 #或者
-cat ~/.local/share/rstudio/log/rsession-ruser.log | tail -n 20
+cat /var/log/rstudio/rstudio-server.log | tail -n 20
 </pre>
 
 ## 7.设置端口防火墙
