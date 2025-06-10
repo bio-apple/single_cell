@@ -21,6 +21,7 @@ wget https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2025.
 sudo yum install rstudio-server-rhel-2025.05.1-513-x86_64.rpm
 
 #在停止服务的状态验证安装完成性
+systemctl stop rstudio-server
 sudo rstudio-server verify-installation
 </pre> 
 
