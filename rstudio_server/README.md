@@ -15,6 +15,10 @@ dnf install -y hdf5 hdf5-devel python3-pip python3-devel libjpeg-turbo libjpeg-t
 
 #安装指定版本的 R
 dnf install -y R-4.2.0
+
+#install RStudio Server https://posit.co/download/rstudio-server/
+wget https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2025.05.1-513-x86_64.rpm
+sudo yum install rstudio-server-rhel-2025.05.1-513-x86_64.rpm
 </pre> 
 
 ## 2.确认端口未被占用
