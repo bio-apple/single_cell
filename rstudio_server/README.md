@@ -19,6 +19,9 @@ dnf install -y R-4.2.0
 #install RStudio Server https://posit.co/download/rstudio-server/
 wget https://download2.rstudio.org/server/rhel8/x86_64/rstudio-server-rhel-2025.05.1-513-x86_64.rpm
 sudo yum install rstudio-server-rhel-2025.05.1-513-x86_64.rpm
+
+#在停止服务的状态验证安装完成性
+sudo rstudio-server verify-installation
 </pre> 
 
 ## 2.确认端口未被占用
@@ -46,6 +49,7 @@ systemctl restart rstudio-server
 
 #停止服务
 systemctl stop rstudio-server
+
 </pre>
 
 ## 4.配置R路径/etc/rstudio/rserver.conf
