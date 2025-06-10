@@ -54,6 +54,11 @@ setenforce 0
 
 #查看 SELinux 状态
 getenforce
+
+常见状态：
+Enforcing（强制执行）
+Permissive（警告模式，不阻止，只记录）
+Disabled（关闭）
 </pre> 
 
 ## 6.如果遇到登录或启动 R session 的问题，可以看日志：
