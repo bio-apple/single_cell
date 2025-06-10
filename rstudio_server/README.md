@@ -7,24 +7,39 @@ sudo dnf update
 
 #安装 EPEL 仓库
 dnf install epel-release -y
-</pre>
+
+#安装指定版本的 R
+dnf install -y R-4.2.0
+
+#安装必要的开发工具和依赖
+dnf groupinstall -y "Development Tools"
+dnf install -y gcc-c++ gfortran readline-devel zlib-devel bzip2-devel pcre2-devel
+dnf install -y hdf5 hdf5-devel python3-pip python3-devel libjpeg-turbo libjpeg-turbo-devel cmake
+</pre> 
 
 ## 2.确认端口未被占用
 <pre>
 #确保 RStudio Server 默认端口（8787）未被其他进程占用。使用以下命令检查端口：
 sudo netstat -tuln | grep 8787
+
 #如果端口已被占用，可以更改 RStudio Server 使用的端口。在 /etc/rstudio/rserver.conf 中添加以下内容来更改端口：
 www-port=8788
 </pre>
 
 ## 3.常用rstudio-server命令
 <pre>
+#启用 rstudio-server 服务：创建开机自动启动的符号链接
+systemctl enable rstudio-server
+
 #启动服务器
 systemctl start rstudio-server
+
 #查看服务器状态
 systemctl status rstudio-server 
+
 #重启RStudio Server
 systemctl restart rstudio-server
+
 #停止服务
 systemctl stop rstudio-server
 </pre>
@@ -51,12 +66,15 @@ cat ~/.local/share/rstudio/log/rsession-ruser.log | tail -n 20
 <pre>
 #检查防火墙状态
 systemctl status firewalld
+
 #若未运行，可先启动
 sudo systemctl start firewalld
 sudo systemctl enable firewalld
+
 #开放 8787 端口
 firewall-cmd --permanent --add-port=8787/tcp
 firewall-cmd --reload
+
 #确认端口是否开放
 firewall-cmd --list-ports
 </pre>
@@ -65,10 +83,13 @@ firewall-cmd --list-ports
 <pre>
 #清除缓存文件
 rm -rf /var/lib/sss/db/*
+
 #然后重启 SSSD 服务
 systemctl restart sssd
+
 #检查服务状态
 systemctl status sssd
+
 #升级 SSSD
 dnf upgrade sssd
 </pre>
