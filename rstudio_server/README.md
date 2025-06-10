@@ -100,3 +100,8 @@ systemctl status sssd
 #升级 SSSD
 dnf upgrade sssd
 </pre>
+
+## 9.允许 root 登录
+<pre>
+#添加 auth-minimum-user-id=0  到/etc/rstudio/rserver.conf文件
+</pre>
