@@ -115,5 +115,5 @@ dnf upgrade sssd
 #添加 auth-minimum-user-id=0  到/etc/rstudio/rserver.conf文件
 </pre>
 
-## 10.清理无效进程
-<pre>ps aux | grep rserver<</pre>
+## 10.查看进程
+<pre>ps aux | grep rserver</pre>
