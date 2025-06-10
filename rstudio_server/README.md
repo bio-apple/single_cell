@@ -70,7 +70,6 @@ systemctl restart rstudio-server
 
 #停止服务
 systemctl stop rstudio-server
-
 </pre>
 
 ## 6.SELinux 可能限制访问，临时关闭测试
