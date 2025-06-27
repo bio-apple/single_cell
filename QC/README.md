@@ -9,7 +9,7 @@ Sequencing Saturation该指标量化了来自已经观察到的 UMI（唯一分�
 该指标的计算公式如下：
 <pre>
 Sequencing Saturation = 1 - (n_deduped_reads / n_reads)
-</pre>>
+</pre>
 
 **unique_confidently_mapped_reads**
 
