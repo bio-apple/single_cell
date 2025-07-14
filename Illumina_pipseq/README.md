@@ -16,6 +16,12 @@ PIP-Seq珠子包含 $10^8$ ($9^{64}$) 个唯一条形码，为标记 100 万个�
 
 # 3.数据预处理PIPseeker(以后可能不再更新) or DRAGEN single Cell RNA App v4.4
 
+PIPseeker算法解析，输出结果分为5个等级，算法如下：
+
+![level5_method](./PIPseeker/level5_method.png)
+
+![level5](./PIPseeker/level5.png)
+
 [PIPseeker-v3.3-User-Guide.pdf](./PIPseeker/PIPseeker-v3.3-User-Guide.pdf)
 
 输出文件：
