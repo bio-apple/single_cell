@@ -22,6 +22,8 @@ PIPseeker算法解析，输出结果分为5个等级，算法如下：
 
 ![level5](./PIPseeker/level5.png)
 
+level1-level5在结果的选取上没有好坏，建议根据自己真实的数据类型选择合适的结果。
+
 [PIPseeker-v3.3-User-Guide.pdf](./PIPseeker/PIPseeker-v3.3-User-Guide.pdf)
 
 输出文件：
