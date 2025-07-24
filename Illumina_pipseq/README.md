@@ -108,8 +108,6 @@ PIPseeker utilizes the STAR package for read alignment. Custom references can be
 
 [Fontanez K, Agam Y, Bevans S, et al. Intrinsic molecular identifiers enable robust molecular counting in single-cell sequencing[J]. bioRxiv, 2024: 2024.10. 04.616561.](https://www.biorxiv.org/content/10.1101/2024.10.04.616561v1.full)
 
-
-
 # Publication
 
 [Hargrove-Wiley E, Obodo D, Bindeman W, et al. Elucidating Sex-Specific Immune Profiles in a Breast Cancer Model[J]. International Journal of Molecular Sciences, 2024, 25(23): 13113.](https://www.mdpi.com/1422-0067/25/23/13113)
