@@ -1,5 +1,4 @@
 FROM ubuntu:latest AS base
-
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y --no-install-recommends  libcurl4-openssl-dev\
     build-essential wget curl ca-certificates bzip2 gnupg git libssl-dev libffi-dev libz-dev libbz2-dev && rm -rf /var/lib/apt/lists/* && \
@@ -8,8 +7,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends  libcurl4-opens
     bash /miniforge.sh -b -p /opt/conda && rm /miniforge.sh
 
 FROM base AS seurat
-RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-seurat r-remotes r-signac dnachun::r-cellchat &&  \
-    /opt/conda/envs/seurat/bin/Rscript -e "remotes::install_github(c('satijalab/seurat-data', 'satijalab/azimuth', 'satijalab/seurat-wrappers'), quiet = TRUE)"
+RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-seurat r-remotes r-signac &&  \
+    /opt/conda/envs/seurat/bin/Rscript -e "remotes::install_github(c('satijalab/seurat-data', 'satijalab/azimuth', 'satijalab/seurat-wrappers','jinworks/CellChat','ge11232002/TFMPvalue'), quiet = TRUE) &&  \
+    setRepositories(ind = 1:3, addURLs = c('https://satijalab.r-universe.dev', 'https://bnprks.r-universe.dev/')) && install.packages(c('BPCells', 'presto', 'glmGamPoi'))"
 
 FROM seurat AS snapy
 RUN /opt/conda/bin/conda create -n scanpy --channel conda-forge --channel bioconda --channel defaults scanpy python-igraph leidenalg
+
+FROM snapy AS R
+RUN /opt/conda/bin/conda create -n r-base4.0.3 --channel conda-forge --channel bioconda --channel defaults --channel bioturing r-base==4.0.3 r-nichenetr  \
+    r-devtools r-essentials r-biocmanager bioconductor-clusterprofiler bioconductor-scdblfinder bioconductor-singler r-monocle3  \
+    bioconductor-deseq2 bioconductor-aucell celltypist
