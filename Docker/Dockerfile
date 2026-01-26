@@ -7,8 +7,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends  libcurl4-opens
     bash /miniforge.sh -b -p /opt/conda && rm /miniforge.sh
 
 FROM base AS seurat
-RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-base r-seurat r-remotes r-signac r-devtools r-tfmpvalue presto &&  \
-    /opt/conda/envs/seurat/bin/Rscript -e "remotes::install_github(c('satijalab/seurat-data', 'satijalab/azimuth','satijalab/seurat-wrappers','bnprks/BPCells/r'), quiet = TRUE)"
+RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-base r-seurat r-remotes r-signac r-devtools r-tfmpvalue presto
 
 FROM seurat AS snapy
 RUN /opt/conda/bin/conda create -n scanpy --channel conda-forge --channel bioconda --channel defaults scanpy python-igraph leidenalg

@@ -5,3 +5,6 @@ RUN /opt/conda/bin/conda create -n r-base4.4.3 --channel conda-forge --channel b
     /opt/conda/bin/conda create -n scanpy --channel conda-forge --channel bioconda --channel defaults cellbender==0.3.2 scanpy python-igraph leidenalg && \
     /opt/conda/bin/conda clean -a -y
 
+
+
+/opt/conda/envs/seurat/bin/Rscript -e "remotes::install_github(c('satijalab/seurat-data', 'satijalab/azimuth','satijalab/seurat-wrappers','bnprks/BPCells/r'), quiet = TRUE)"
