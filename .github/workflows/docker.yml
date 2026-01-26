@@ -60,7 +60,7 @@ jobs:
           file: Docker/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: fanyucai1/scRNA:latest
+          tags: fanyucai1/scrna:latest
           # 推荐添加以下参数，避免磁盘爆炸 + 加速构建
           cache-from: type=gha  # 使用 GitHub Actions 缓存
           cache-to: type=gha,mode=max  # 缓存所有层，加速下次构建
