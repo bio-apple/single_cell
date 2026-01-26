@@ -7,9 +7,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends  libcurl4-opens
     bash /miniforge.sh -b -p /opt/conda && rm /miniforge.sh
 
 FROM base AS seurat
-RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-seurat r-remotes r-signac &&  \
-    /opt/conda/envs/seurat/bin/Rscript -e "remotes::install_github(c('satijalab/seurat-data', 'satijalab/azimuth', 'satijalab/seurat-wrappers','jinworks/CellChat','ge11232002/TFMPvalue'), quiet = TRUE) &&  \
-    setRepositories(ind = 1:3, addURLs = c('https://satijalab.r-universe.dev', 'https://bnprks.r-universe.dev/')) && install.packages(c('BPCells', 'presto', 'glmGamPoi'))"
+RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-seurat r-remotes r-signac
+RUN /opt/conda/envs/seurat/bin/Rscript -e "\
+    options(timeout = 600); \
+    setRepositories(ind = 1:3, addURLs = c('https://satijalab.r-universe.dev', 'https://bnprks.r-universe.dev/')); \
+    install.packages(c('BPCells', 'presto', 'glmGamPoi'), quiet = TRUE); \
+    remotes::install_github(c('satijalab/seurat-data', 'satijalab/azimuth', 'satijalab/seurat-wrappers', 'jinworks/CellChat', 'ge11232002/TFMPvalue'), upgrade = 'never', quiet = TRUE)"
 
 FROM seurat AS snapy
 RUN /opt/conda/bin/conda create -n scanpy --channel conda-forge --channel bioconda --channel defaults scanpy python-igraph leidenalg
