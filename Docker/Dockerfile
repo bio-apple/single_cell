@@ -7,12 +7,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends  libcurl4-opens
     bash /miniforge.sh -b -p /opt/conda && rm /miniforge.sh
 
 FROM base AS seurat
-RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-base r-seurat r-remotes r-signac r-devtools r-tfmpvalue presto
+RUN /opt/conda/bin/conda create -n seurat --channel conda-forge --channel bioconda --channel defaults r-base r-seurat r-remotes r-signac r-devtools r-tfmpvalue presto && \
+    /opt/conda/envs/seurat/bin/Rscript -e "install.packages(c(\"BiocManager\",\"BPCells\", \"presto\", \"glmGamPoi\"))"
 
 FROM seurat AS snapy
 RUN /opt/conda/bin/conda create -n scanpy --channel conda-forge --channel bioconda --channel defaults scanpy python-igraph leidenalg
 
-FROM snapy AS R
+FROM snapy AS rbase
 RUN /opt/conda/bin/conda create -n r-base4.0.3 --channel conda-forge --channel bioconda --channel defaults --channel bioturing r-base==4.0.3 r-nichenetr  \
     r-devtools r-essentials r-biocmanager bioconductor-clusterprofiler bioconductor-scdblfinder bioconductor-singler r-monocle3  \
     bioconductor-deseq2 bioconductor-aucell celltypist
